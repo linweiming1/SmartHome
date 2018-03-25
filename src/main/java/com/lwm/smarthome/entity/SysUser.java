@@ -9,13 +9,13 @@ import java.util.Date;
 * author：linweiming
 * */
 @Entity
-@Table(name = "sysUser")
+@Table(name = "sys_user")
 public class SysUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_name")
+    @Column(name = "user_name",unique = true)
     private String userName;
     @Column(name = "pass_word")
     private String passWord;
@@ -27,8 +27,8 @@ public class SysUser implements Serializable {
     private String authLevel;
     @Column(name = "family_name")
     private String familyName;
-    @Column(name = "vcode")
-    private String vcode;
+    @Column(name = "create_time")
+    private Date createTime;
 
     public Long getId() {
         return id;
@@ -86,11 +86,11 @@ public class SysUser implements Serializable {
         this.familyName = familyName;
     }
 
-    public String getVcode() {
-        return vcode;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setVcode(String vcode) {
-        this.vcode = vcode;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

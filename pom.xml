@@ -196,6 +196,7 @@
       <artifactId>jboss-logging</artifactId>
       <version>3.3.0.Final</version>
     </dependency>
+
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>

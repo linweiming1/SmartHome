@@ -3,12 +3,11 @@
 <c:set var="ctx" value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}" />
 <c:set var="r" value="${ctx }/resources" />
 
-
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":"   + request.getServerPort() + path + "/";
 %>
-
+${requestScope.time}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
