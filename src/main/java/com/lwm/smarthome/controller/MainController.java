@@ -2,22 +2,24 @@ package com.lwm.smarthome.controller;
 
 import com.lwm.common.Weather;
 import com.lwm.smarthome.entity.SysUser;
+import com.lwm.smarthome.service.SysUserService;
 import com.lwm.util.WeatherUtil;
 import org.jboss.logging.Logger;
-import org.springframework.http.HttpRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 public class MainController {
 
-    private static Logger logger = Logger.getLogger(MainController.class);
+    public static Logger logger = Logger.getLogger(MainController.class);
+    @Autowired
+    SysUserService sysUserService;
 
     @RequestMapping("workbench")
     public String workbench(Model model) {
@@ -30,14 +32,46 @@ public class MainController {
         return "workbench";
     }
 
-    @ResponseBody
-    @RequestMapping("register")
-    public String register(HttpServletRequest req) throws UnsupportedEncodingException {
-        String retureMessage = null;
-        req.setCharacterEncoding("UTF-8");
+    @RequestMapping("personalInfo")
+    public String personalInfo() {
+        return "info";
+    }
+
+    @RequestMapping("AuthInfo")
+    public String AuthInfo(HttpSession session) {
+        SysUser sysUser = (SysUser) session.getAttribute("current_user");
+        String returnPage = null;
 
 
-        return retureMessage;
+        return returnPage;
+    }
+
+    @RequestMapping("toPsw")
+    public String toPsw() {
+        return "psw";
+    }
+
+    @RequestMapping("updatePsw")
+    public String updatePsw(HttpSession httpSession, HttpServletRequest request, Model model) {
+
+        logger.info("-------updatePsw-------------");
+        // 从session　中取出来用户数据
+        SysUser aUser = (SysUser) httpSession.getAttribute("current_user");
+        String msg = null;
+        // 旧密码比对
+        String oldPassword = (String) request.getParameter("oldPassword");
+        String newPassword = (String) request.getParameter("newPassword");
+        if (aUser.getPassWord().equals(oldPassword)) {
+            // 旧密码对了，可以更新
+            aUser.setPassWord(newPassword);
+            sysUserService.updateSysUser(aUser);
+            msg = "修改成功！";
+        } else {
+            // 旧密码错误，不能更新
+            msg = "旧密码错误！";
+        }
+        model.addAttribute("msg", msg);
+        return "psw";
     }
 
 }

@@ -11,9 +11,13 @@
             </div>
             <ul class="subnav">
                 <li>
-                    <a href="${ctx }/admin/info" target="rightFrame">个人信息</a></li>
+                    <a href="${ctx}/personalInfo" target="rightFrame">个人信息</a>
+                </li>
                 <li>
-                    <a onclick="ymPrompt.win({title:'修改密码',height:'230',width:'380',dragOut:false,iframe:true,message:'${ctx}/admin/toPsw'});">修改密码</a>
+                    <a href="${ctx }/AuthInfo" target="rightFrame">授权情况</a>
+                </li>
+                <li>
+                    <a onclick="ymPrompt.win({title:'修改密码',height:'230',width:'380',dragOut:false,iframe:true,message:'${ctx}/toPsw'});">修改密码</a>
                 </li>
             </ul>
         </li>

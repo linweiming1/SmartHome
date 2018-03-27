@@ -41,6 +41,9 @@ public class VerifyCodeController {
         VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
     }
 
+    /*
+    * 验证码验证
+    * */
     @ResponseBody
     @RequestMapping("/checkCode")
     public String checkCode(HttpServletRequest request) {

@@ -15,7 +15,7 @@ public class SysUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_name",unique = true)
+    @Column(name = "user_name", unique = true)
     private String userName;
     @Column(name = "pass_word")
     private String passWord;
