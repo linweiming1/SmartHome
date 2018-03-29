@@ -27,7 +27,7 @@
                 </a>
             </div>
             <ul class="subnav">
-                <li><a href="${ctx }/appUser/list" target="rightFrame">会员列表</a></li>
+                <li><a href="${ctx }/appUser/list" target="rightFrame">用户列表</a></li>
             </ul>
         </li>
         <li class="agency">
@@ -50,10 +50,23 @@
                        target="rightFrame">开关灯</a></li>
                 <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=2"
                        target="rightFrame">窗帘</a></li>
+                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=2"
+                       target="rightFrame">电视</a></li>
+            </ul>
+        </li>
+
+        <li class="agency">
+            <div class="nav-header">
+                <a class="clearfix"> <span>拓展功能</span><i class="icon"></i>
+                </a>
+            </div>
+            <ul class="subnav">
                 <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=3"
                        target="rightFrame">扫地机器人</a></li>
                 <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=4"
                        target="rightFrame">报警器</a></li>
+                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=4"
+                       target="rightFrame">安防摄像头</a></li>
             </ul>
         </li>
     </ul>
