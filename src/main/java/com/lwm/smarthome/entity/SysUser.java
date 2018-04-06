@@ -29,6 +29,10 @@ public class SysUser implements Serializable {
     private String familyName;
     @Column(name = "create_time")
     private Date createTime;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "vcode")
+    private String vcode;
 
     public Long getId() {
         return id;
@@ -93,4 +97,21 @@ public class SysUser implements Serializable {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getVcode() {
+        return vcode;
+    }
+
+    public void setVcode(String vcode) {
+        this.vcode = vcode;
+    }
+
 }

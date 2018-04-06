@@ -2,7 +2,8 @@ package com.lwm.smarthome.controller;
 
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -28,11 +29,10 @@ public class LoginController {
     @Autowired
     SysUserService sysUserService;
 
-    private static Logger logger = Logger.getLogger(LoginController.class);
+    private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     /**
      * WEB端的登录验证
-     *
      * @param request
      * @return
      */

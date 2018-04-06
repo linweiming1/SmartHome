@@ -4,7 +4,8 @@ import com.lwm.common.Weather;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
 import com.lwm.util.WeatherUtil;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class MainController {
 
-    public static Logger logger = Logger.getLogger(MainController.class);
+    public static Logger logger = LoggerFactory.getLogger(MainController.class);
     @Autowired
     SysUserService sysUserService;
 
