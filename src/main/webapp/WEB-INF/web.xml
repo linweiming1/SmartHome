@@ -9,11 +9,18 @@
     <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
 
+  <context-param>
+    <param-name>socketPort</param-name>
+    <param-value>10086</param-value>
+  </context-param>
 
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-
+  <listener>
+    <description>WifiServerSocket 服务随 web 启动而启动</description>
+    <listener-class>com.lwm.Wifi.WifiServerSocketListener</listener-class>
+  </listener>
   <!-- 配置字符编码过滤器 -->
   <!-- 字符编码过滤器必须配置在所有过滤器的最前面! -->
   <filter>
