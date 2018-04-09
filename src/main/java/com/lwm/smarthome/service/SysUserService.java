@@ -23,9 +23,13 @@ public class SysUserService {
         return sysUser;
     }
 
-    public SysUser findByUsername(String userName){
+    public SysUser findByUserName(String userName){
         SysUser sysUser=sysUserDao.findByUserName(userName);
        return sysUser;
+    }
+    public SysUser findByEmail(String email){
+        SysUser sysUser=sysUserDao.getByEmail(email);
+        return sysUser;
     }
     public void updateSysUser(SysUser sysUser) {
         SysUser sysUser1 = sysUserDao.getOne(sysUser.getId());
@@ -33,6 +37,9 @@ public class SysUserService {
         sysUser1.setPassWord(sysUser.getPassWord());
         sysUser1.setAuthLevel(sysUser.getAuthLevel());
         sysUser1.setAuthorizer(sysUser.getAuthorizer());
-        sysUserDao.save(sysUser1);
+        sysUser1.setBinding(sysUser.isBinding());
+        sysUser.setEmail(sysUser.getEmail());
+        sysUser.setVcode(sysUser.getVcode());
+        sysUserDao.saveAndFlush(sysUser1);
     }
 }

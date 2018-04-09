@@ -2,6 +2,8 @@ package com.lwm.test;
 
 import com.lwm.MailUtil.EmailUtil;
 import com.lwm.MailUtil.MailSenderInfo;
+import com.lwm.smarthome.controller.VerifyCodeController;
+import com.lwm.util.VerifyCodeUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -21,6 +23,6 @@ public class MailTest {
     @Test
     public void sendEmail() {
         EmailUtil.sendEmail(mailInfo, "linweimingfz@163.com", "1314");
-
+     //   System.out.println(VerifyCodeUtils.generateVerifyCode(6,"123456789"));
     }
 }

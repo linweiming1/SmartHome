@@ -33,6 +33,16 @@ public class SysUser implements Serializable {
     private String email;
     @Column(name = "vcode")
     private String vcode;
+    @Column(name = "isBinding")
+    private boolean isBinding;
+
+    public boolean isBinding() {
+        return isBinding;
+    }
+
+    public void setBinding(boolean binding) {
+        isBinding = binding;
+    }
 
     public Long getId() {
         return id;

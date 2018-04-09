@@ -40,6 +40,7 @@ public class VerifyCodeUtils {
         if(sources == null || sources.length() == 0){
             sources = VERIFY_CODES;
         }
+
         int codesLen = sources.length();
         Random rand = new Random(System.currentTimeMillis());
         StringBuilder verifyCode = new StringBuilder(verifySize);
