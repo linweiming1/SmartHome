@@ -1,5 +1,9 @@
 package com.lwm.Wifi;
 
+import com.lwm.app.AppServiceSocket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.ServletContext;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,10 +18,9 @@ import java.util.Map;
 /**
  * 硬件端与服务器端的长连接
  *
- * @author Administrator
- *
  */
 public class WifiServerSocket extends Thread {
+    private static Logger logger = LoggerFactory.getLogger(WifiServerSocket.class);
     private ServletContext servletContext;
     private ServerSocket serverSocket;
 
@@ -30,11 +33,9 @@ public class WifiServerSocket extends Thread {
         String port = this.servletContext.getInitParameter("socketPort");
         if (serverSocket == null) {
             try {
-
                 this.serverSocket = new ServerSocket(Integer.parseInt(port));
             } catch (IOException e) {
                 e.printStackTrace();
-
             }
 
         }
@@ -48,7 +49,10 @@ public class WifiServerSocket extends Thread {
             try {
                 // 开启服务器，线程阻塞，等待8266的连接
                 Socket socket = serverSocket.accept();
+                logger.info("a client has been connected!It's port is "+socket.getPort());
+
                 ProcessSocketData psd = new ProcessSocketData(socket);
+
                 new Thread(psd).start();
 
             } catch (IOException e) {
@@ -104,10 +108,11 @@ public class WifiServerSocket extends Thread {
                 while (play) {
                     byte[] msg = new byte[10];
                     in.read(msg);//读取流数据
-                    System.out.println("WiFi发过来的数据：" + Arrays.toString(msg));
-                    String str = new String(msg).trim();
-                    System.out.println(str);
+                    //  logger.info("The data that WiFi has sent is:"+Arrays.toString(msg));
 
+                    String str = new String(msg).trim();
+
+                    logger.info("The  wifi whose port is "+this.socket.getPort()+" has sent data: " + str);
                     if (str.contains("CONN")) {
                         mStrName = str.trim();
                         /*
@@ -115,6 +120,7 @@ public class WifiServerSocket extends Thread {
                          * 很多人这里可能不太懂，APP与服务端的通信在AppControlServlet类中触发，想要实现APP与8266通信，只能将这个socket对象通过类的静态变量暴露出去。
                          * 等到AppControlServlet收到APP的信息，就立马通过CONN_9527作为索引取出socket，和8266进行通讯
                          */
+                        logger.info("the wifi connect whose port is "+this.socket.getPort()+" has been bind to certain smart home user,the codeName is "+mStrName);
                         WifiServerSocket.socketMap.put(mStrName, this);
 
                     }
@@ -136,11 +142,28 @@ public class WifiServerSocket extends Thread {
                 }
             }
         }
+        /**
+         * 发送数据到APP的方法
+         * @param strName
+         * @param msg
+         */
+        private void sendToAPP(String strName, byte[] msg) {
+            System.out.println("sessionId:" + strName);
+
+            if (AppServiceSocket.getAcceptorSessions().get(strName) != null) {
+                AppServiceSocket.getAcceptorSessions().get(strName)
+                        .write(new String(msg));
+                System.out.println("已发送给客户端");
+
+            } else {
+                System.out.println("客户端没上线");
+            }
+        }
 
         //这是服务器发送数据到8266的函数
         public void send(byte[] bytes) {
             try {
-                out.write(bytes);
+                out.write(bytes, 0, bytes.length);
             } catch (IOException e) {
                 try {
                     // 移除集合里面的Socket
@@ -154,7 +177,8 @@ public class WifiServerSocket extends Thread {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                System.out.println("该客户端已退出！");
+
+                logger.info("The client has logged out");
             }
         }
 
