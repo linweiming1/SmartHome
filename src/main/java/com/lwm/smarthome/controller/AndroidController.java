@@ -76,7 +76,7 @@ public class AndroidController {
         SysUser sysUser = sysUserService.findByUserName(userName);
         if (vcode.equals(sysUser.getVcode())) {
             returnMsg = "1";
-            sysUser.setBinding(true);
+            sysUser.setIsBinding("1");
             sysUserService.updateSysUser(sysUser);
             logger.info("安卓端的邮箱绑定验证码正确！");
         } else {

@@ -37,7 +37,7 @@ public class SysUserService {
         sysUser1.setPassWord(sysUser.getPassWord());
         sysUser1.setAuthLevel(sysUser.getAuthLevel());
         sysUser1.setAuthorizer(sysUser.getAuthorizer());
-        sysUser1.setBinding(sysUser.isBinding());
+        sysUser1.setIsBinding(sysUser.getIsBinding());
         sysUser.setEmail(sysUser.getEmail());
         sysUser.setVcode(sysUser.getVcode());
         sysUserDao.saveAndFlush(sysUser1);

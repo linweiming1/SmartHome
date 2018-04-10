@@ -34,14 +34,14 @@ public class SysUser implements Serializable {
     @Column(name = "vcode")
     private String vcode;
     @Column(name = "isBinding")
-    private boolean isBinding;
+    private String  isBinding;
 
-    public boolean isBinding() {
+    public String getIsBinding() {
         return isBinding;
     }
 
-    public void setBinding(boolean binding) {
-        isBinding = binding;
+    public void setIsBinding(String isBinding) {
+        this.isBinding = isBinding;
     }
 
     public Long getId() {
