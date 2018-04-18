@@ -47,7 +47,7 @@ public class VerifyCodeController {
     @ResponseBody
     @RequestMapping("/checkCode")
     public String checkCode(HttpServletRequest request) {
-        String isCorrect = "123";
+        String isCorrect = null;
         HttpSession session = request.getSession(true);
         String checkCode = (String) session.getAttribute("verCode");
         String paramsCheckCode = request.getParameter("checkCode").trim();

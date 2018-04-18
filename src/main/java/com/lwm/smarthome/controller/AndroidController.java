@@ -2,8 +2,10 @@ package com.lwm.smarthome.controller;
 
 import com.lwm.MailUtil.EmailUtil;
 import com.lwm.MailUtil.MailSenderInfo;
+import com.lwm.Wifi.WifiServerSocket;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
+import com.lwm.util.ToolUtils;
 import com.lwm.util.VerifyCodeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,4 +122,33 @@ public class AndroidController {
         return returnMsg;
 
     }
+
+    /*
+    * 用于app控制设备灯的接口
+    * */
+    @RequestMapping("/lightController")
+    public String lightController(@RequestParam(value = "macAddress") String macAddress, @RequestParam(value = "status") String status) {
+        String returnMsg = null;
+
+        logger.info("mac地址：" + macAddress);
+        logger.info("灯的状态：" + status);
+        returnMsg = "1";
+       // byte[] msg1 = ToolUtils.stringToByte(macAddress);
+        WifiServerSocket.ProcessSocketData psd = WifiServerSocket.getSocketMap()
+                .get(new String(macAddress));
+        byte[] msg2={'L','E','D','1'};
+        if (psd != null) {
+            // TODO 8266在线状态
+            psd.send(msg2);
+            logger.info("the app data has been sent to wifi(8266)");
+            returnMsg = "1";
+        }
+        else {
+            // TODO 继电器离线状态
+            logger.info("the socket connection is null,for the wifi(8266) has not connect to the server!");
+            returnMsg = "0";
+        }
+        return returnMsg;
+    }
+
 }

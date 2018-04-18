@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 /*
 *app单向与硬件的连接的中间桥梁接口
 * */
@@ -28,7 +27,6 @@ public class App2WifiController {
 
         if (sessionId != null) {
             // TODO 将获取的数据打印出来
-
 
             logger.info("sessionId:" + sessionId);
 

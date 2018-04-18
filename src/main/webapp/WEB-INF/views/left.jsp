@@ -36,7 +36,7 @@
                 </a>
             </div>
             <ul class="subnav">
-                <li><a href="${ctx }/sysReport/list" target="rightFrame">空调温度</a></li>
+                <li><a href="${ctx }/airCondition/list" target="rightFrame">空调温度</a></li>
                 <li><a href="${ctx }/sysIllumination/list" target="rightFrame">电冰箱温度</a></li>
             </ul>
         </li>

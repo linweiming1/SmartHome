@@ -7,12 +7,12 @@
         <div class="top-light"></div>
         <h1 class="logo"></h1>
         <div class="toolbar">
-            <div class="login-info clearfix">
+
                 <span>欢迎您:</span>
                 <span class="user-name">${current_user.userName }</span></br>
                 <span>上次登录时间:</span>
                 <span class="user-name">${requestScope.loginTime }</span></br>
-            </div>
+
             <div class="tool clearfix">
                 <a class="tips" href="${ctx }/workbench" target="rightFrame">我的主页</a>&nbsp;
                 &nbsp;

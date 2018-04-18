@@ -1,10 +1,12 @@
 package com.lwm.smarthome.entity;
 
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
 import java.util.Date;
 
 //怎么配置二级缓存的策略怎么指定
-@Cacheable()
+//@Cacheable()
 @Entity
 @Table(name = "air_conditioner")
 public class AirConditioner {
@@ -14,9 +16,10 @@ public class AirConditioner {
     private Date createTime;
     private String producer;
     private String currTemperature;
-
+    private String expTemperature;
     private SysUser sysUser;
-
+    private Date addTime;
+    private String macAddress;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,6 +67,42 @@ public class AirConditioner {
         this.producer = producer;
     }
 
+    @Column(name = "currTemperature")
+    public String getCurrTemperature() {
+        return currTemperature;
+    }
+
+    public void setCurrTemperature(String currTemperature) {
+        this.currTemperature = currTemperature;
+    }
+
+    @Column(name = "addTime")
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    @Column(name = "expTemperature")
+    public String getExpTemperature() {
+        return expTemperature;
+    }
+
+    public void setExpTemperature(String expTemperature) {
+        this.expTemperature = expTemperature;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    @Column(name = "macAddress")
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
+
     @JoinColumn(name = "sysUser_id")
     @ManyToOne
     public SysUser getSysUser() {
@@ -73,4 +112,6 @@ public class AirConditioner {
     public void setSysUser(SysUser sysUser) {
         this.sysUser = sysUser;
     }
+
+
 }

@@ -89,7 +89,7 @@ h1{ float:left; margin:14px 0 0 24px; width:184px; height:54px; background:url(.
 .login-info .login-msg a.msg-num{ float:left; width:16px; height:9px; margin:6px 0 0 4px; background:url(../images/countbg.png); color:#fff; line-height:9px; font-size:9px; text-align: center;}
 
 .tool{
-	margin: 11px 0 0 0;
+	margin: 9px 0 0 0;
 }
 .tool a{
 	float: left;
@@ -100,7 +100,7 @@ h1{ float:left; margin:14px 0 0 24px; width:184px; height:54px; background:url(.
 }
 .tool a.tips{
 	padding: 0 8px;
-	margin:0 1px 0 0;
+	margin:0 3px 0 0;
 }
 .tool a.help-btn{
 	margin: 0 0 0 4px;
