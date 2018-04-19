@@ -32,6 +32,7 @@ public class AirConditionerService {
     public void updateAirConditioner(AirConditioner airConditioner) {
         AirConditioner airConditioner1 = airConditionerDao.findById(airConditioner.getId());
         airConditioner1.setStatus(airConditioner.isStatus());
+        airConditioner1.setExpTemperature(airConditioner.getExpTemperature());
         airConditionerDao.save(airConditioner1);
     }
 

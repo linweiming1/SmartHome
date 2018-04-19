@@ -71,7 +71,7 @@ public class AirConditionerController {
     * */
     @RequestMapping("/searchByEquipmentName")
     public String searchByEquipmentName(@RequestParam(value = "equipmentName") String equipmentName, Model model, HttpSession session) {
-        logger.info("进入了查询控制器,设备名是："+equipmentName);
+        logger.info("进入了查询控制器,设备名是：" + equipmentName);
         SysUser currSysUser = (SysUser) session.getAttribute("current_user");
         if (currSysUser == null) {
             logger.info("当前无用户会话！");
@@ -81,6 +81,24 @@ public class AirConditionerController {
 
         model.addAttribute("page", page);
         return "airCondition/list";
+    }
+
+    @RequestMapping("/toAdjust")
+    public String toAdjust(@RequestParam(value = "deviceId") String deviceId, Model model) {
+
+        model.addAttribute("deviceId", deviceId);
+        return "airCondition/adjust";
+    }
+
+    @ResponseBody
+    @RequestMapping("/adjust")
+    public String adjust(@RequestParam(value = "expTemperature") String expTemperature, @RequestParam(value = "deviceId") String deviceId) {
+        String returnMsg = null;
+        logger.info("这里是调整温度的控制器" + expTemperature + deviceId);
+        AirConditioner airConditioner = airConditionerService.getAirConditioner(Long.parseLong(deviceId));
+        airConditioner.setExpTemperature(expTemperature);
+        airConditionerService.updateAirConditioner(airConditioner);
+        return returnMsg;
     }
 
     /*

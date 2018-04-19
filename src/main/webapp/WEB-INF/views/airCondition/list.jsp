@@ -110,8 +110,18 @@
         })
 
         $('.adjust').click(function () {
-            alert("调整温度成功！")
-
+            deviceId = $(this).attr("data");
+            ymPrompt.win({
+                title: '调整温度',
+                height: '320',
+                width: '380',
+                dragOut: false,
+                iframe: true,
+                message: '${ctx}/airCondition/toAdjust?deviceId='+deviceId,
+                handler: function (result) {
+                    location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                }, btn: [['确定', 'yes']]
+            });
         })
         $('.delete').click(function () {
             delete_id = $(this).attr("data");
