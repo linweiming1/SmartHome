@@ -50,12 +50,19 @@ public class AndroidController {
     }
 
     /*
-    * 安卓端注册的接口
+    * 安卓端注册的接口，
+    * 邮箱重复返回”2“
     * 注册成功返回”1“，注册失败返回”0“
     * */
+    @ResponseBody
     @RequestMapping("/register")
     public String register(@RequestBody SysUser sysUser) {
-        String returnMsg = "0";
+        String returnMsg="0";
+       String isEmailRepeat= isEmailRepeated(sysUser.getEmail());
+        if (isEmailRepeat=="2"){
+            returnMsg="2";
+            return returnMsg;
+        }
         sysUser.setCreateTime(new Date());
         sysUser.setAuthLevel("2");
         String vcode = VerifyCodeUtils.generateVerifyCode(6, VERIFY_CODES);
@@ -89,7 +96,7 @@ public class AndroidController {
     }
 
     /*
-    * 用于验证用户名的是否可用
+    * 用于验证用户名的是否可用的方法
     * */
     @RequestMapping("/userNameValide")
     public String userNameValide(@RequestParam(value = "userName") String userName) {
@@ -99,7 +106,7 @@ public class AndroidController {
             returnMsg = "1";
             logger.info("此用户名可用");
         } else {
-            returnMsg = "0";
+            returnMsg = "2";
             logger.info("此用户名不可用");
         }
         return returnMsg;
@@ -120,7 +127,6 @@ public class AndroidController {
             logger.info("此邮箱已被绑定！");
         }
         return returnMsg;
-
     }
 
     /*

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface AirConditionerDao extends PagingAndSortingRepository<AirConditioner, Long> {
     Page<AirConditioner> findBySysUser(Pageable pageable, SysUser sysUser);
 
+    Page<AirConditioner> findBySysUserAndEquipmentName(Pageable pageable, SysUser sysUser, String equipmentName);
+
     AirConditioner findById(Long id);
 
 }

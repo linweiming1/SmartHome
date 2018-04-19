@@ -1,6 +1,6 @@
 package com.lwm.test;
 
-import com.lwm.dto.Pager;
+
 import com.lwm.smarthome.dao.AirConditionerDao;
 import com.lwm.smarthome.dao.SysUserDao;
 import com.lwm.smarthome.entity.AirConditioner;

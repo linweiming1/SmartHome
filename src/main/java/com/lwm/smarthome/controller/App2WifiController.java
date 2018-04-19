@@ -20,14 +20,12 @@ public class App2WifiController {
     @RequestMapping("AppController")
     public String AppController(@RequestParam(value = "sessionId") String sessionId,
                                 @RequestParam(value = "data") String data) {
-
         String returnMsg = null;
         // 将字符串的数据转化成byte数组
         byte[] msg = ToolUtils.stringToByte(data);
 
         if (sessionId != null) {
             // TODO 将获取的数据打印出来
-
             logger.info("sessionId:" + sessionId);
 
             logger.info("data:" + data);
@@ -46,7 +44,6 @@ public class App2WifiController {
                 logger.info("the socket connection is null,for the wifi(8266) has not connect to the server!");
                 returnMsg = "0";
             }
-
         }
         return returnMsg;
     }

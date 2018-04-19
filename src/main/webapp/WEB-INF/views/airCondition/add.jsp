@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="kv-item clearfix">
-                        <label>温度：</label>
+                        <label>预期温度：</label>
                         <div class="kv-item-content">
                             <input type="number" name="currTemperature" placeholder="请输入温度" id="currTemperature"
                                    maxlength="20">
@@ -37,14 +37,17 @@
                                    maxlength="20">
                         </div>
                     </div>
-                    <div class="kv-item clearfix">
+                    <div class="kv-item clearfix" align="center">
+                        <label>&nbsp;</label>
                         <label>&nbsp;</label>
                         <div class="kv-item-content">
                             <button type="button" class="sapar-btn sapar-btn-recom query-btn">绑定</button>
                         </div>
-                        &nbsp;&nbsp;
-                        <span id="error" class="red">${msg }</span>
                     </div>
+                </div>
+
+                <div id="error" class="red" align="center">
+                    <div> ${msg }</div>
                 </div>
             </form>
         </div>
@@ -95,11 +98,12 @@
                 data: JSON.stringify(jsonData),
                 type: "POST",
                 url: "${ctx}/airCondition/binding",
-                success: function (data) {
-                    $('#error').text('设备绑定成功！');
-                },
+                success:
+                    function (data) {
+                        $('#error').text("设备绑定成功！");
+                    },
                 error: function (data) {
-                    $('#error').text('设备绑定失败！');
+                    $('#error').text("设备绑定失败！");
                 }
             });
 

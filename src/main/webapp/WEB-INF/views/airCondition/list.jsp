@@ -14,29 +14,26 @@
             <h2>空调温度上报列表</h2>
         </div>
         <div class="subfiled-content">
-            <form action="${ctx }/airCondition/list" method="post" id="searchForm">
-                <div class="search-box clearfix">
-                    <div class="kv-item clearfix">
-                        <label>名称：</label>
-                        <div class="kv-item-content">
-                            <input type="text" name="sysReport.boxId" value="${entity.equipmentName}"
-                                   placeholder="请输入设备名" maxlength="20">
-                        </div>
-                        <label>&nbsp;</label>
-                        <div class="kv-item-content">
-                            <a class="sapar-btn sapar-btn-recom query-btn search">查询</a>
-                        </div>
-                        <label>&nbsp;</label>
-                        <div class="kv-item-content">
-                            <a class="sapar-btn sapar-btn-recom query-btn add">绑定新设备</a>
-                        </div>
-                        <label>&nbsp;</label>
-                        <div class="kv-item-content">
-                            <a class="sapar-btn sapar-btn-recom query-btn refresh">刷新</a>
-                        </div>
+            <div class="search-box clearfix">
+                <div class="kv-item clearfix">
+                    <label>名称：</label>
+                    <div class="kv-item-content">
+                        <input type="text" id="equipmentName" name="equipmentName" placeholder="请输入设备名" maxlength="20">
+                    </div>
+                    <label>&nbsp;</label>
+                    <div class="kv-item-content">
+                        <a class="sapar-btn sapar-btn-recom query-btn search">查询</a>
+                    </div>
+                    <label>&nbsp;</label>
+                    <div class="kv-item-content">
+                        <a class="sapar-btn sapar-btn-recom query-btn add">绑定新设备</a>
+                    </div>
+                    <label>&nbsp;</label>
+                    <div class="kv-item-content">
+                        <a class="sapar-btn sapar-btn-recom query-btn refresh">刷新</a>
                     </div>
                 </div>
-            </form>
+            </div>
             <!--表格开始-->
             <div class="table">
                 <!--表格具体内容-->
@@ -103,9 +100,13 @@
 <script type="text/javascript">
     $(function () {
         $('.search').click(function () {
-            alert("查询ok");
-            var user = {"producer": "123"};
-
+            var equipmentName = $('#equipmentName').val();
+            if (equipmentName == 0) {
+                location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+            }
+            else {
+                location.href = "${ctx}/airCondition/searchByEquipmentName?equipmentName=" + equipmentName;
+            }
         })
 
         $('.adjust').click(function () {
@@ -124,15 +125,21 @@
                 url: '${ctx}/airCondition/changeStatus?id=' + device_id,
                 dataType: "text",
                 success: function (result) {
-                    alert("设备设备状态切换成功!");
-                    location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                    ymPrompt.alert({
+                        message: '设备状态切换成功', title: '成功信息', handler: function () {
+                            location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                        }
+                    })
                 }
             });
         })
 
         $(".refresh").click(function () {
-            alert("刷新成功");
-            location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+            ymPrompt.alert({
+                message: '刷新成功', title: '成功信息', handler: function () {
+                    location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                }
+            })
 
         })
         $('.add').click(function () {
@@ -145,7 +152,8 @@
                 message: '${ctx}/airCondition/toAdd',
                 handler: function () {
                     location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
-                }
+                },
+                btn: [['确定', 'yes']]
             });
         });
     });
@@ -159,8 +167,11 @@
                 url: '${ctx}/airCondition/unBindingDevice?id=' + delete_id,
                 dataType: "text",
                 success: function (result) {
-                    alert("解绑设备成功!");
-                    location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                    ymPrompt.alert({
+                        message: '解绑成功', title: '成功信息', handler: function () {
+                            location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                        }
+                    })
                 }
             });
         }

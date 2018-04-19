@@ -12,4 +12,6 @@ public class AppConstant {
     public static final String CURRENT_USER = "current_user";
     // 分页大小
     public static final int PAGESIZE = 5;
+    //默认的第一页
+    public static final int pageOffSetStr=0;
 }
