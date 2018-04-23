@@ -44,7 +44,7 @@ public class LoginController {
         if (checkCode.equalsIgnoreCase("the checkCode is correct")) {
             logger.info("check code ok");
         } else {
-            request.setAttribute("codeerr", "checkcode is wrong!!!");
+            request.setAttribute("codeerr", "checkCode is wrong!!!");
             logger.info("check code not ok");
             return "forward:/index.jsp";
         }

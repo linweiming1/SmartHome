@@ -46,7 +46,7 @@
                 </a>
             </div>
             <ul class="subnav">
-                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=1"
+                <li><a href="${ctx }/lighter/list"
                        target="rightFrame">开关灯</a></li>
                 <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=2"
                        target="rightFrame">窗帘</a></li>
@@ -67,6 +67,8 @@
                        target="rightFrame">报警器</a></li>
                 <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=4"
                        target="rightFrame">安防摄像头</a></li>
+                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=5"
+                       target="rightFrame">AR</a></li>
             </ul>
         </li>
     </ul>

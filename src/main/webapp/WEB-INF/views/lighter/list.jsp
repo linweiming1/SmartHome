@@ -11,20 +11,11 @@
     <div id="saper-hd"></div>
     <div id="saper-bd">
         <div class="subfiled clearfix">
-            <h2>空调温度控制中心</h2>
+            <h2>电灯控制中心</h2>
         </div>
         <div class="subfiled-content">
             <div class="search-box clearfix">
                 <div class="kv-item clearfix">
-                    <label>名称：</label>
-                    <div class="kv-item-content">
-                        <input type="text" id="equipmentName" name="equipmentName" placeholder="请输入设备名" maxlength="20">
-                    </div>
-                    <label>&nbsp;</label>
-                    <div class="kv-item-content">
-                        <a class="sapar-btn sapar-btn-recom query-btn search">查询</a>
-                    </div>
-                    <label>&nbsp;</label>
                     <div class="kv-item-content">
                         <a class="sapar-btn sapar-btn-recom query-btn add">绑定新设备</a>
                     </div>
@@ -43,13 +34,9 @@
                         <tr>
                             <th>序号</th>
                             <th width="20%">设备名</th>
-                            <th>当前温度(℃)</th>
-                            <th>预期温度(℃)</th>
-                            <th width="20%">上报时间</th>
                             <th>当前状态</th>
                             <th>设备绑定时间</th>
-                            <th>生产商</th>
-                            <th width="10%">操作</th>
+                            <th width="20%">刷新时间</th>
                             <th width="10%">解绑设备</th>
                         </tr>
                         </thead>
@@ -63,9 +50,6 @@
                             <tr>
                                 <td>${(v.index + 1)+requestScope.page.getNumber()*5 }</td>
                                 <td>${d.equipmentName }</td>
-                                <td>${d.currTemperature }</td>
-                                <td>${d.expTemperature }</td>
-                                <td><fmt:formatDate value="${d.addTime}" pattern="yyyy/MM/dd HH:mm:ss"/></td>
                                 <td>
                                     <c:if test="${d.status eq true}" var="status"><a class="status"
                                                                                      data="${d.id}">运行</a></c:if>
@@ -73,10 +57,7 @@
                                                                                       data="${d.id}">关闭</a></c:if>
                                 </td>
                                 <td><fmt:formatDate value="${d.createTime}" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-                                <td>${d.producer}</td>
-                                <td>
-                                    <a class="adjust" data="${d.id}">调整温度</a>
-                                </td>
+                                <td><fmt:formatDate value="${d.addTime}" pattern="yyyy/MM/dd HH:mm:ss"/></td>
                                 <td>
                                     <a class="delete quit-btn exit" data="${d.id}">[解绑]</a>
                                 </td>
@@ -84,8 +65,7 @@
                         </c:forEach>
                         </tbody>
                     </table>
-
-                    <jsp:include page="../airCondition/pager.jsp">
+                    <jsp:include page="../lighter/pager.jsp">
                         <jsp:param value="${requestScope.page.getTotalElements() }" name="items"/>
                     </jsp:include>
                 </div>
@@ -99,30 +79,7 @@
 <script type="text/javascript" src="${r }/common/js/sapar.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('.search').click(function () {
-            var equipmentName = $('#equipmentName').val();
-            if (equipmentName == 0) {
-                location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
-            }
-            else {
-                location.href = "${ctx}/airCondition/searchByEquipmentName?equipmentName=" + equipmentName;
-            }
-        })
 
-        $('.adjust').click(function () {
-            deviceId = $(this).attr("data");
-            ymPrompt.win({
-                title: '调整温度',
-                height: '320',
-                width: '380',
-                dragOut: false,
-                iframe: true,
-                message: '${ctx}/airCondition/toAdjust?deviceId='+deviceId,
-                handler: function (result) {
-                    location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
-                }, btn: [['确定', 'yes']]
-            });
-        })
         $('.delete').click(function () {
             delete_id = $(this).attr("data");
             ymPrompt.confirmInfo({message: '您确定解绑此设备吗', handler: handlerDel});
@@ -132,12 +89,12 @@
             device_id = $(this).attr("data");
             $.ajax({
                 type: "GET",
-                url: '${ctx}/airCondition/changeStatus?id=' + device_id,
+                url: '${ctx}/lighter/changeStatus?id=' + device_id,
                 dataType: "text",
                 success: function (result) {
                     ymPrompt.alert({
                         message: '设备状态切换成功', title: '成功信息', handler: function () {
-                            location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                            location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";
                         }
                     })
                 }
@@ -147,10 +104,9 @@
         $(".refresh").click(function () {
             ymPrompt.alert({
                 message: '刷新成功', title: '成功信息', handler: function () {
-                    location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                    location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";
                 }
             })
-
         })
         $('.add').click(function () {
             ymPrompt.win({
@@ -159,9 +115,9 @@
                 width: '380',
                 dragOut: false,
                 iframe: true,
-                message: '${ctx}/airCondition/toAdd',
+                message: '${ctx}/lighter/toAdd',
                 handler: function () {
-                    location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                    location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";
                 },
                 btn: [['确定', 'yes']]
             });
@@ -174,12 +130,12 @@
         if (tp == 'ok') {
             $.ajax({
                 type: "GET",
-                url: '${ctx}/airCondition/unBindingDevice?id=' + delete_id,
+                url: '${ctx}/lighter/unBindingDevice?id=' + delete_id,
                 dataType: "text",
                 success: function (result) {
                     ymPrompt.alert({
                         message: '解绑成功', title: '成功信息', handler: function () {
-                            location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                            location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";
                         }
                     })
                 }

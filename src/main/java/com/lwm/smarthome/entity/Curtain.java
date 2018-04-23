@@ -12,6 +12,7 @@ public class Curtain {
     private Date createTime;
     private String producer;
     private SysUser sysUser;
+    private Rooms room;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,5 +68,15 @@ public class Curtain {
 
     public void setSysUser(SysUser sysUser) {
         this.sysUser = sysUser;
+    }
+
+    @JoinColumn(name = "room_id")
+    @ManyToOne
+    public Rooms getRoom() {
+        return room;
+    }
+
+    public void setRoom(Rooms room) {
+        this.room = room;
     }
 }

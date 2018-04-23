@@ -10,8 +10,10 @@ public class Lighter {
     private String equipmentName;
     private boolean status;
     private Date createTime;
-    private String producer;
+    private Date addTime;
     private SysUser sysUser;
+    private Rooms room;
+    private String macAddress;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,13 +52,22 @@ public class Lighter {
         this.createTime = createTime;
     }
 
-    @Column(name = "producer")
-    public String getProducer() {
-        return producer;
+    @Column(name = "add_time")
+    public Date getAddTime() {
+        return addTime;
     }
 
-    public void setProducer(String producer) {
-        this.producer = producer;
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    @Column(name = "mac_address")
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
     }
 
     @JoinColumn(name = "sys_user_id")
@@ -68,4 +79,15 @@ public class Lighter {
     public void setSysUser(SysUser sysUser) {
         this.sysUser = sysUser;
     }
+
+    @JoinColumn(name = "room_id")
+    @ManyToOne
+    public Rooms getRoom() {
+        return room;
+    }
+
+    public void setRoom(Rooms room) {
+        this.room = room;
+    }
+
 }

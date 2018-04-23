@@ -13,7 +13,7 @@ public class Freezer {
     private String producer;
     private String currTemperature;
     private SysUser sysUser;
-
+    private Rooms room;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -69,5 +69,15 @@ public class Freezer {
 
     public void setSysUser(SysUser sysUser) {
         this.sysUser = sysUser;
+    }
+
+    @JoinColumn(name = "room_id")
+    @ManyToOne
+    public Rooms getRoom() {
+        return room;
+    }
+
+    public void setRoom(Rooms room) {
+        this.room = room;
     }
 }

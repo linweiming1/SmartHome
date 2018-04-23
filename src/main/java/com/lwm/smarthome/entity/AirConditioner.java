@@ -20,6 +20,7 @@ public class AirConditioner {
     private SysUser sysUser;
     private Date addTime;
     private String macAddress;
+    private Rooms room;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -113,5 +114,13 @@ public class AirConditioner {
         this.sysUser = sysUser;
     }
 
+    @JoinColumn(name = "room_id")
+    @ManyToOne
+    public Rooms getRoom() {
+        return room;
+    }
 
+    public void setRoom(Rooms room) {
+        this.room = room;
+    }
 }

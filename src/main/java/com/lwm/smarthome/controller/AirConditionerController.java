@@ -29,6 +29,9 @@ public class AirConditionerController {
     AirConditionerService airConditionerService;
     private static Logger logger = LoggerFactory.getLogger(AirConditionerController.class);
 
+    /*
+    * 此action用于列表
+    * */
     @RequestMapping("/list")
     public String list(Model model, HttpServletRequest request, HttpSession session) {
         SysUser currSysUser = (SysUser) session.getAttribute("current_user");
@@ -46,6 +49,9 @@ public class AirConditionerController {
         return "airCondition/list";
     }
 
+    /*
+    * 此action用于改变设备的状态
+    * */
     @ResponseBody
     @RequestMapping("/changeStatus")
     public String changeStatus(@RequestParam() String id) {
@@ -83,6 +89,9 @@ public class AirConditionerController {
         return "airCondition/list";
     }
 
+    /*
+    * 此action用于跳转到设备的调整温度
+    * */
     @RequestMapping("/toAdjust")
     public String toAdjust(@RequestParam(value = "deviceId") String deviceId, Model model) {
 
@@ -90,6 +99,9 @@ public class AirConditionerController {
         return "airCondition/adjust";
     }
 
+    /*
+    * 此action用于设备的调整温度
+    * */
     @ResponseBody
     @RequestMapping("/adjust")
     public String adjust(@RequestParam(value = "expTemperature") String expTemperature, @RequestParam(value = "deviceId") String deviceId) {
@@ -115,11 +127,14 @@ public class AirConditionerController {
         return returnMsg;
     }
 
+    /*
+    * 此action用于设备的解绑
+    * */
     @ResponseBody
     @RequestMapping("/unBindingDevice")
     public String deleteDevice(@RequestParam() String id) {
         String returnMsg = null;
-        logger.info("已解绑id为" + id + "的设备");
+        logger.info("已解绑id为" + id + "的空调设备");
         airConditionerService.deleteAirConditioner(Long.parseLong(id));
         returnMsg = "ok";
         return returnMsg;

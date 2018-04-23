@@ -2,8 +2,11 @@ package com.lwm.test;
 
 
 import com.lwm.smarthome.dao.AirConditionerDao;
+import com.lwm.smarthome.dao.LighterDao;
+import com.lwm.smarthome.dao.RoomsDao;
 import com.lwm.smarthome.dao.SysUserDao;
 import com.lwm.smarthome.entity.AirConditioner;
+import com.lwm.smarthome.entity.Rooms;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.AirConditionerService;
 import com.lwm.smarthome.service.SysUserService;
@@ -18,6 +21,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class JPATest {
@@ -25,6 +33,10 @@ public class JPATest {
     AirConditionerDao airConditionerDao;
     @Autowired
     SysUserDao sysUserDao;
+    @Autowired
+    LighterDao lighterDao;
+    @Autowired
+    RoomsDao roomsDao;
     @Autowired
     AirConditionerService airConditionerService;
     private static Logger logger = LoggerFactory.getLogger(JPATest.class);
@@ -61,7 +73,22 @@ public class JPATest {
     }
 
     @Test
-    public void pageTopager() {
+    public void doubleManyToOne() {
+
+        SysUser sysUser = sysUserDao.findOne(Long.parseLong("2"));
+        Rooms room=new Rooms();
+        room.setSysUser(sysUser);
+        room.setRoomName("厨房2");
+        roomsDao.saveAndFlush(room);
+
+        Set rooms = new HashSet<Rooms>();
+        rooms = sysUser.getRooms();
+        Iterator iterator = rooms.iterator();
+        while (iterator.hasNext()) {
+            Rooms room1 = (Rooms) iterator.next();
+            System.out.println(room1.getRoomName());
+        }
+
 
     }
 }

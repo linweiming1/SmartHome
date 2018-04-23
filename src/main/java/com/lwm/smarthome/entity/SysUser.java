@@ -3,6 +3,8 @@ package com.lwm.smarthome.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /*
 *用户表
@@ -34,7 +36,17 @@ public class SysUser implements Serializable {
     @Column(name = "vcode")
     private String vcode;
     @Column(name = "isBinding")
-    private String  isBinding;
+    private String isBinding;
+    @OneToMany(fetch=FetchType.EAGER,cascade={CascadeType.REMOVE},mappedBy="sysUser")
+    private Set<Rooms> rooms = new HashSet<>();
+
+    public Set<Rooms> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Set<Rooms> rooms) {
+        this.rooms = rooms;
+    }
 
     public String getIsBinding() {
         return isBinding;
