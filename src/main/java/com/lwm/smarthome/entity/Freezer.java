@@ -10,10 +10,13 @@ public class Freezer {
     private String equipmentName;
     private boolean status;
     private Date createTime;
+    private Date addTime;
     private String producer;
     private String currTemperature;
+    private String expTemperature;
     private SysUser sysUser;
     private Rooms room;
+    private String macAddress;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,6 +62,42 @@ public class Freezer {
 
     public void setProducer(String producer) {
         this.producer = producer;
+    }
+
+    @Column(name = "curr_temperature")
+    public String getCurrTemperature() {
+        return currTemperature;
+    }
+
+    public void setCurrTemperature(String currTemperature) {
+        this.currTemperature = currTemperature;
+    }
+
+    @Column(name = "exp_temperature")
+    public String getExpTemperature() {
+        return expTemperature;
+    }
+
+    public void setExpTemperature(String expTemperature) {
+        this.expTemperature = expTemperature;
+    }
+
+    @Column(name = "add_time")
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    @Column(name = "mac_address")
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
     }
 
     @JoinColumn(name = "sysUser_id")

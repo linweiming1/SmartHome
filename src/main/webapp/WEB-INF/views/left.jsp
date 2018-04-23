@@ -37,7 +37,7 @@
             </div>
             <ul class="subnav">
                 <li><a href="${ctx }/airCondition/list" target="rightFrame">空调温度</a></li>
-                <li><a href="${ctx }/sysIllumination/list" target="rightFrame">电冰箱温度</a></li>
+                <li><a href="${ctx }/freezer/list" target="rightFrame">电冰箱温度</a></li>
             </ul>
         </li>
         <li class="agency">
@@ -48,9 +48,9 @@
             <ul class="subnav">
                 <li><a href="${ctx }/lighter/list"
                        target="rightFrame">开关灯</a></li>
-                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=2"
+                <li><a href="${ctx }/curtain/list"
                        target="rightFrame">窗帘</a></li>
-                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=2"
+                <li><a href="${ctx }/television/list"
                        target="rightFrame">电视</a></li>
             </ul>
         </li>

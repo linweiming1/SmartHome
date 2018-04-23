@@ -26,7 +26,7 @@
                     </div>
                     <label>&nbsp;</label>
                     <div class="kv-item-content">
-                        <a class="sapar-btn sapar-btn-recom query-btn add">绑定新设备</a>
+                        <a class="sapar-btn sapar-btn-recom query-btn add">绑定新空调</a>
                     </div>
                     <label>&nbsp;</label>
                     <div class="kv-item-content">

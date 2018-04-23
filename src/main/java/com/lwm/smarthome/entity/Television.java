@@ -11,6 +11,8 @@ public class Television {
     private boolean status;
     private Date createTime;
     private String producer;
+    private Date addTime;
+    private String macAddress;
     private SysUser sysUser;
     private Rooms room;
 
@@ -58,6 +60,24 @@ public class Television {
 
     public void setProducer(String producer) {
         this.producer = producer;
+    }
+
+    @Column(name = "add_time")
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    @Column(name = "mac_address")
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
     }
 
     @JoinColumn(name = "sys_user_id")

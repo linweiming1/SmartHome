@@ -11,7 +11,7 @@
     <div id="saper-hd"></div>
     <div id="saper-bd">
         <div class="subfiled clearfix">
-            <h2>电灯控制中心</h2>
+            <h2>电视控制中心</h2>
         </div>
         <div class="subfiled-content">
 
@@ -19,7 +19,7 @@
                 <div class="kv-item clearfix">
                     <label>&nbsp;</label>
                     <div class="kv-item-content">
-                        <a class="sapar-btn sapar-btn-recom query-btn add">绑定新灯</a>
+                        <a class="sapar-btn sapar-btn-recom query-btn add">绑定新电视</a>
                     </div>
                     <label>&nbsp;</label>
                     <div class="kv-item-content">
@@ -67,7 +67,7 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <jsp:include page="../lighter/pager.jsp">
+                    <jsp:include page="../television/pager.jsp">
                         <jsp:param value="${requestScope.page.getTotalElements() }" name="items"/>
                     </jsp:include>
                 </div>
@@ -91,12 +91,12 @@
             device_id = $(this).attr("data");
             $.ajax({
                 type: "GET",
-                url: '${ctx}/lighter/changeStatus?id=' + device_id,
+                url: '${ctx}/television/changeStatus?id=' + device_id,
                 dataType: "text",
                 success: function (result) {
                     ymPrompt.alert({
                         message: '设备状态切换成功', title: '成功信息', handler: function () {
-                            location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";
+                            location.href = "${ctx }/television/list?pageOffSet=${requestScope.page.getNumber() }";
                         }
                     })
                 }
@@ -106,7 +106,7 @@
         $(".refresh").click(function () {
             ymPrompt.alert({
                 message: '刷新成功', title: '成功信息', handler: function () {
-                    location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";
+                    location.href = "${ctx }/television/list?pageOffSet=${requestScope.page.getNumber() }";
                 }
             })
         })
@@ -117,9 +117,9 @@
                 width: '380',
                 dragOut: false,
                 iframe: true,
-                message: '${ctx}/lighter/toAdd',
+                message: '${ctx}/television/toAdd',
                 handler: function () {
-                    location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";
+                    location.href = "${ctx }/television/list?pageOffSet=${requestScope.page.getNumber() }";
                 },
                 btn: [['确定', 'yes']]
             });
@@ -132,12 +132,12 @@
         if (tp == 'ok') {
             $.ajax({
                 type: "GET",
-                url: '${ctx}/lighter/unBindingDevice?id=' + delete_id,
+                url: '${ctx}/television/unBindingDevice?id=' + delete_id,
                 dataType: "text",
                 success: function (result) {
                     ymPrompt.alert({
                         message: '解绑成功', title: '成功信息', handler: function () {
-                            location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";
+                            location.href = "${ctx }/television/list?pageOffSet=${requestScope.page.getNumber() }";
                         }
                     })
                 }
