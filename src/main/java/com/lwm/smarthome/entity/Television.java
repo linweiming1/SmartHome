@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "televison")
+@Table(name = "television")
 public class Television {
     private Long id;
     private String equipmentName;

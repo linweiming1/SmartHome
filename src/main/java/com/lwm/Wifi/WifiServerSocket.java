@@ -1,8 +1,16 @@
 package com.lwm.Wifi;
 
 import com.lwm.app.AppServiceSocket;
+import com.lwm.smarthome.dao.LighterDao;
+import com.lwm.smarthome.dao.SysUserDao;
+import com.lwm.smarthome.entity.Lighter;
+import com.lwm.smarthome.entity.SysUser;
+import com.lwm.smarthome.service.LightService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletContext;
 import java.io.DataInputStream;
@@ -12,6 +20,7 @@ import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,12 +29,16 @@ import static java.io.FileDescriptor.out;
 /**
  * 硬件端与服务器端的长连接
  */
+
 public class WifiServerSocket extends Thread {
     private static Logger logger = LoggerFactory.getLogger(WifiServerSocket.class);
     private ServletContext servletContext;
     private ServerSocket serverSocket;
 
     private static Map<String, ProcessSocketData> socketMap = new HashMap<>();
+
+    private LightService lightService = new LightService();
+
 
     public WifiServerSocket(ServletContext servletContext) {
         this.servletContext = servletContext;
@@ -99,22 +112,60 @@ public class WifiServerSocket extends Thread {
             try {
                 // 死循环，无线读取8266发送过来的数据
                 while (play) {
-                    byte[] msg = new byte[10];
+                    byte[] msg = new byte[30];
+
                     in.read(msg);//读取流数据
                     String str = new String(msg).trim();
-
                     logger.info("The  wifi whose port is " + this.socket.getPort() + " has sent data: " + str);
-
-                    if (str.contains("CONN")) {
-                        mStrName = str.trim();
+                    String[] strings = str.split(",");
+                    //用于用户成功连接到服务器
+                    if (strings.length == 1) {
+                        mStrName = strings[0].trim();
                         /*
-                         * 判断发过的是CONN_9527,那么就将此socket对象添加到这个类的静态集合里面，以CONN_9527为索引。
+                         * 判断发过来的是CONN_9527,那么就将此socket对象添加到这个类的静态集合里面，以CONN_9527为索引。
                          * 很多人这里可能不太懂，APP与服务端的通信在AppControlServlet类中触发，想要实现APP与8266通信，只能将这个socket对象通过类的静态变量暴露出去。
                          * 等到AppControlServlet收到APP的信息，就立马通过CONN_9527作为索引取出socket，和8266进行通讯
                          */
-                        logger.info("the wifi connect whose port is " + this.socket.getPort() + " has been bind to certain smart home user,the codeName is " + mStrName);
+                        logger.info("the family name is " + mStrName + " has connected to server");
                         WifiServerSocket.socketMap.put(mStrName, this);
                     }
+                    //用于具体某个家庭设备的绑定
+                    if (strings.length == 2) {
+                        String deviceType = strings[0];//设备类型
+                        String macAddress = strings[1];//mac地址
+                        if (mStrName == null) {
+                            logger.info("please send the family Id to server first");
+                        } else {
+                            logger.info("begin to bind the " + mStrName + "'s device," +
+                                    "device type is " + deviceType + " macAddress is " + macAddress);
+
+                        }
+                    }
+                    //用于更新具体某个家庭的设备信息
+                    if (strings.length == 4) {
+                        String deviceType = strings[0];//设备类型
+                        String macAddress = strings[1];//设备的mac地址
+                        String data = strings[2];//具体数据
+                        String status = strings[3];//状态
+                        if (mStrName == null) {
+                            logger.info("please send the family Id to server first");
+                        } else {
+                            logger.info("begin to update the " + mStrName + "'s data," +
+                                    "device type is " + deviceType + " macAddress is " + macAddress + ",data is " + data);
+
+                            ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+                            SysUserDao sysUserDao = (SysUserDao) context.getBean("sysUserDao");
+                            LighterDao lighterDao = (LighterDao) context.getBean("lighterDao");
+                            SysUser sysUser = sysUserDao.findByUserName(mStrName);
+                            Lighter lighter = lighterDao.findBySysUserAndMacAddress(sysUser, macAddress);
+                            lighter.setAddTime(new Date());
+                            lighter.setLuminance(data);
+                            lighterDao.save(lighter);
+
+                        }
+
+                    }
+
 
                 }
             } catch (IOException e) {

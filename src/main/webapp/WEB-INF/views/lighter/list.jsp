@@ -36,6 +36,7 @@
                         <tr>
                             <th>序号</th>
                             <th width="20%">设备名</th>
+                            <th>当前屋内亮度(cd/㎡)</th>
                             <th>当前状态</th>
                             <th>设备绑定时间</th>
                             <th width="20%">刷新时间</th>
@@ -52,6 +53,7 @@
                             <tr>
                                 <td>${(v.index + 1)+requestScope.page.getNumber()*5 }</td>
                                 <td>${d.equipmentName }</td>
+                                <td>${d.luminance }</td>
                                 <td>
                                     <c:if test="${d.status eq true}" var="status"><a class="status"
                                                                                      data="${d.id}">运行</a></c:if>

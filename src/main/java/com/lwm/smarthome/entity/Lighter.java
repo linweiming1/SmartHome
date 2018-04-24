@@ -14,6 +14,8 @@ public class Lighter {
     private SysUser sysUser;
     private Rooms room;
     private String macAddress;
+    //亮度
+    private String luminance;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -68,6 +70,15 @@ public class Lighter {
 
     public void setMacAddress(String macAddress) {
         this.macAddress = macAddress;
+    }
+
+    @Column(name = "luminance")
+    public String getLuminance() {
+        return luminance;
+    }
+
+    public void setLuminance(String luminance) {
+        this.luminance = luminance;
     }
 
     @JoinColumn(name = "sys_user_id")

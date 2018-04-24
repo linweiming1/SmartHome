@@ -6,6 +6,7 @@ import com.lwm.smarthome.dao.LighterDao;
 import com.lwm.smarthome.dao.RoomsDao;
 import com.lwm.smarthome.dao.SysUserDao;
 import com.lwm.smarthome.entity.AirConditioner;
+import com.lwm.smarthome.entity.Lighter;
 import com.lwm.smarthome.entity.Rooms;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.AirConditionerService;
@@ -21,10 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
@@ -90,5 +88,13 @@ public class JPATest {
         }
 
 
+    }
+    @Test
+    public void testLight(){
+        SysUser sysUser = sysUserDao.getByUserName("linweiming");
+        Lighter lighter =lighterDao.findBySysUserAndMacAddress(sysUser,"9999999");
+        lighter.setAddTime(new Date());
+        lighter.setLuminance("10");
+        lighterDao.save(lighter);
     }
 }
