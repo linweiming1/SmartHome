@@ -7,6 +7,7 @@
 <c:set var="r" value="${ctx }/resources"/>
 <link rel="stylesheet" id='skin' type="text/css" href="${r }/prompt/skin/qq/ymPrompt.css"/>
 <link rel="stylesheet" href="${r }/common/css/sapar.css"/>
+<meta http-equiv="refresh" content="3;url=${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber()}">
 <div id="saper-container">
     <div id="saper-hd"></div>
     <div id="saper-bd">
@@ -23,7 +24,7 @@
                     </div>
                     <label>&nbsp;</label>
                     <div class="kv-item-content">
-                        <a class="sapar-btn sapar-btn-recom query-btn refresh">刷新</a>
+                        <a class="sapar-btn sapar-btn-recom query-btn refresh">手动刷新</a>
                     </div>
                 </div>
             </div>
@@ -52,9 +53,9 @@
                         <c:forEach items="${requestScope.page.getContent()}" var="d" varStatus="v">
                             <tr>
                                 <td>${(v.index + 1)+requestScope.page.getNumber()*5 }</td>
-                                <td>${d.equipmentName }</td>
-                                <td>${d.luminance }</td>
-                                <td>
+                                <td >${d.equipmentName }</td>
+                                <td id="status">${d.luminance }</td>
+                                <td >
                                     <c:if test="${d.status eq true}" var="status"><a class="status"
                                                                                      data="${d.id}">运行</a></c:if>
                                     <c:if test="${d.status eq false}" var="status"><a class="status"
@@ -104,8 +105,20 @@
                 }
             });
         })
+  /*      function get_data()
+        {
+            $.ajax({
+                url: '${ctx }/lighter/listJson?pageOffSet=${requestScope.page.getNumber()}',
+                success: function(data) {
 
+                    $('#status').text("99");
+                }
+            });
+        }
+*/
+        //setInterval("get_data()",3000);//3秒一次执行
         $(".refresh").click(function () {
+            //$('#status').text("99");
             ymPrompt.alert({
                 message: '刷新成功', title: '成功信息', handler: function () {
                     location.href = "${ctx }/lighter/list?pageOffSet=${requestScope.page.getNumber() }";

@@ -9,7 +9,6 @@ public class WifiServerSocketListener implements ServletContextListener {
     private WifiServerSocket wifiServerSocket;
 
     public void contextDestroyed(ServletContextEvent e) {
-
         if (wifiServerSocket != null && wifiServerSocket.isInterrupted()) {
             wifiServerSocket.closeServerSocket();
             wifiServerSocket.interrupt();

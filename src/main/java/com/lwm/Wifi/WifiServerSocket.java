@@ -121,11 +121,7 @@ public class WifiServerSocket extends Thread {
                     //用于用户成功连接到服务器
                     if (strings.length == 1) {
                         mStrName = strings[0].trim();
-                        /*
-                         * 判断发过来的是CONN_9527,那么就将此socket对象添加到这个类的静态集合里面，以CONN_9527为索引。
-                         * 很多人这里可能不太懂，APP与服务端的通信在AppControlServlet类中触发，想要实现APP与8266通信，只能将这个socket对象通过类的静态变量暴露出去。
-                         * 等到AppControlServlet收到APP的信息，就立马通过CONN_9527作为索引取出socket，和8266进行通讯
-                         */
+
                         logger.info("the family name is " + mStrName + " has connected to server");
                         WifiServerSocket.socketMap.put(mStrName, this);
                     }
@@ -161,6 +157,7 @@ public class WifiServerSocket extends Thread {
                             lighter.setAddTime(new Date());
                             lighter.setLuminance(data);
                             lighterDao.save(lighter);
+
 
                         }
 

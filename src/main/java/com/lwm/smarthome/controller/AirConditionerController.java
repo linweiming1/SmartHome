@@ -48,7 +48,23 @@ public class AirConditionerController {
         model.addAttribute("page", page);
         return "airCondition/list";
     }
-
+    @ResponseBody
+    @RequestMapping("/listJson")
+    public Page listJson(Model model, HttpServletRequest request, HttpSession session) {
+        SysUser currSysUser = (SysUser) session.getAttribute("current_user");
+        if (currSysUser == null) {
+            logger.info("当前无用户会话！");
+        }
+        String pageOffSetStr = request.getParameter("pageOffSet");
+        if (pageOffSetStr == null) {
+            pageOffSetStr = "0";
+        }
+        int pageOffSet = Integer.parseInt(pageOffSetStr);
+        Pageable pageable = new PageRequest(pageOffSet, PAGESIZE);
+        Page page = airConditionerService.findBySysUser(pageable, currSysUser);
+      //  model.addAttribute("page", page);
+      return page;
+    }
     /*
     * 此action用于改变设备的状态
     * */

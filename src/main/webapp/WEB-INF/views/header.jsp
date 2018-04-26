@@ -4,14 +4,21 @@
        value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}"/>
 <div id="hd">
     <div class="hd-wrap clearfix">
+
         <div class="top-light"></div>
         <h1 class="logo"></h1>
+
+
+        <div class="info">
+            <span>当前室温</span>
+            <span>当前室内亮度 </span>
+        </div>
         <div class="toolbar">
 
-                <span>欢迎您:</span>
-                <span class="user-name">${current_user.userName }</span></br>
-                <span>上次登录时间:</span>
-                <span class="user-name">${requestScope.loginTime }</span></br>
+            <span>欢迎您:</span>
+            <span >${current_user.userName }</span></br>
+            <span>上次登录时间:</span>
+            <span >${requestScope.loginTime }</span></br>
 
             <div class="tool clearfix">
                 <a class="tips" href="${ctx }/workbench" target="rightFrame">我的主页</a>&nbsp;
