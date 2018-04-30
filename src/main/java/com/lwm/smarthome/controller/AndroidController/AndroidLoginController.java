@@ -1,11 +1,10 @@
-package com.lwm.smarthome.controller;
+package com.lwm.smarthome.controller.AndroidController;
 
 import com.lwm.MailUtil.EmailUtil;
 import com.lwm.MailUtil.MailSenderInfo;
 import com.lwm.Wifi.WifiServerSocket;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
-import com.lwm.util.ToolUtils;
 import com.lwm.util.VerifyCodeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +22,8 @@ import java.util.Date;
 * */
 @ResponseBody
 @Controller
-public class AndroidController {
-    private static Logger logger = LoggerFactory.getLogger(AndroidController.class);
+public class AndroidLoginController {
+    private static Logger logger = LoggerFactory.getLogger(AndroidLoginController.class);
     @Autowired
     SysUserService sysUserService;
     @Autowired

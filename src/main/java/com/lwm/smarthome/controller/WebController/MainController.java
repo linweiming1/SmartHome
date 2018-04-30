@@ -1,4 +1,4 @@
-package com.lwm.smarthome.controller;
+package com.lwm.smarthome.controller.WebController;
 
 import com.lwm.common.Weather;
 import com.lwm.smarthome.entity.SysUser;
@@ -23,12 +23,14 @@ public class MainController {
     SysUserService sysUserService;
 
     @RequestMapping("workbench")
-    public String workbench(Model model) {
+    public String workbench(Model model,HttpSession session) {
         logger.info("-------workbench-------------");
         Weather weather = WeatherUtil.getWeather("福州");
         if (weather == null) {
             return "netfail";
         }
+
+
         model.addAttribute("entity", weather);
         return "workbench";
     }

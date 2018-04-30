@@ -11,5 +11,6 @@ import java.util.List;
 public interface RoomsDao extends JpaRepository<Rooms,Long> {
     List<Rooms> findBySysUser(SysUser sysUser);
     void deleteRoomsBySysUserAndRoomName(SysUser sysUser,String roomName);
+
     Rooms findBySysUserAndRoomName(SysUser sysUser,String roomName);
 }

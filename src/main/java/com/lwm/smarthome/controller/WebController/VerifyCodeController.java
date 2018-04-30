@@ -1,4 +1,4 @@
-package com.lwm.smarthome.controller;
+package com.lwm.smarthome.controller.WebController;
 
 import com.lwm.util.VerifyCodeUtils;
 import org.springframework.stereotype.Controller;

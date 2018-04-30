@@ -5,10 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.lwm.common.WeatherData;
-import com.lwm.common.WeatherDto;
-import com.lwm.common.WeatherInfo;
-import com.lwm.common.Weather;
+import com.lwm.common.*;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -31,14 +28,16 @@ public class WeatherUtil {
         }
         city = HttpUtil.urlEncodeUTF8(city);
         String json = HttpUtil.httpGet(URL.replace("CITY", city).replace("KEY", KEY));
-
+        //  System.out.println(json);
         WeatherDto dto = new Gson().fromJson(json, WeatherDto.class);
 
         if (dto == null) {
             return null;
         }
         Weather weather = null;
+
         List<WeatherInfo> results = dto.getResults();
+
         if (results != null && results.size() > 0) {
             WeatherInfo result = results.get(0);
             if (result != null) {

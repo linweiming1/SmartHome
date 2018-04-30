@@ -2,10 +2,6 @@ package com.lwm.test;
 
 import com.lwm.MailUtil.EmailUtil;
 import com.lwm.MailUtil.MailSenderInfo;
-import com.lwm.smarthome.controller.VerifyCodeController;
-import com.lwm.smarthome.dao.AirConditionerDao;
-import com.lwm.util.ToolUtils;
-import com.lwm.util.VerifyCodeUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

@@ -15,6 +15,7 @@
 <body>
 <div id="container">
     <!-- 头部信息 -->
+
     <%@ include file="header.jsp" %>
 
     <div id="bd">
@@ -47,5 +48,6 @@
             iframe.height = document.body.clientHeight - 110;
         }
     };
+
 </script>
 </html>

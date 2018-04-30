@@ -1,17 +1,15 @@
-package com.lwm.smarthome.controller;
+package com.lwm.smarthome.controller.WebController;
 
+import com.lwm.common.Weather;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
+import com.lwm.util.WeatherUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +31,7 @@ public class LoginController {
 
     /**
      * WEB端的登录验证
+     *
      * @param request
      * @return
      */
@@ -64,6 +63,14 @@ public class LoginController {
             request.setAttribute("err", "username or password is wrong!!!");
             return "forward:/index.jsp";
         }
+
+        Weather weather = WeatherUtil.getWeather("福州");
+
+        if (weather == null) {
+            logger.info("获取信息失败");
+        }
+
+        session.setAttribute("entityData", weather);
         return "main";
     }
 

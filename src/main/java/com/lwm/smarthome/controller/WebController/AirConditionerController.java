@@ -1,4 +1,4 @@
-package com.lwm.smarthome.controller;
+package com.lwm.smarthome.controller.WebController;
 
 import com.lwm.smarthome.entity.AirConditioner;
 import com.lwm.smarthome.entity.SysUser;

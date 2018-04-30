@@ -1,4 +1,4 @@
-package com.lwm.smarthome.controller;
+package com.lwm.smarthome.controller.WIFIController;
 /*
 *wifi单向与app的连接的中间桥梁接口
 * */

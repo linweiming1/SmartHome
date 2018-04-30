@@ -1,5 +1,6 @@
-package com.lwm.smarthome.controller;
+package com.lwm.smarthome.controller.AndroidController;
 
+import com.lwm.smarthome.controller.WebController.AirConditionerController;
 import com.lwm.smarthome.entity.Rooms;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.RoomsService;
@@ -12,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /*
 * 这里是用来与安卓端进行数据的交互
@@ -72,7 +70,7 @@ public class AndroidRoomController {
         SysUser sysUser = sysUserService.findByUserName(userName);
 
         returnMSg = roomsService.deleteRoom(sysUser, roomName);
-        logger.info("用户名为" + userName + "的房间号删除成功");
+        logger.info("用户名为" + userName + "的"+roomName+"房间号删除成功");
         return returnMSg;
     }
 }

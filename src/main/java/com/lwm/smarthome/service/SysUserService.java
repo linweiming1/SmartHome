@@ -53,6 +53,12 @@ public class SysUserService {
 
     }
 
+    public void updateSysUserPassWord(SysUser sysUser, String newPassWord) {
+        SysUser sysUser1 = sysUserDao.getOne(sysUser.getId());
+        sysUser1.setPassWord(newPassWord);
+        sysUserDao.saveAndFlush(sysUser1);
+    }
+
     public List<String> getRoomsName(String userName) {
         SysUser sysUser = sysUserDao.getByUserName(userName);
         Set<Rooms> listRooms = sysUser.getRooms();

@@ -10,6 +10,7 @@ import com.lwm.smarthome.entity.Lighter;
 import com.lwm.smarthome.entity.Rooms;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.AirConditionerService;
+import com.lwm.smarthome.service.RoomsService;
 import com.lwm.smarthome.service.SysUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +38,10 @@ public class JPATest {
     RoomsDao roomsDao;
     @Autowired
     AirConditionerService airConditionerService;
+    @Autowired
+    SysUserService sysUserService;
+    @Autowired
+    RoomsService roomsService;
     private static Logger logger = LoggerFactory.getLogger(JPATest.class);
 
     @Test
@@ -96,5 +101,13 @@ public class JPATest {
         lighter.setAddTime(new Date());
         lighter.setLuminance("10");
         lighterDao.save(lighter);
+    }
+    @Test
+    public void testRoom(){
+        SysUser sysUser = sysUserService.findByUserName("linweiming");
+
+       roomsService.deleteRoom(sysUser, "浴室3");
+
+
     }
 }

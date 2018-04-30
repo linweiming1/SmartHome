@@ -1,4 +1,4 @@
-package com.lwm.smarthome.controller;
+package com.lwm.smarthome.controller.WIFIController;
 
 import com.lwm.Wifi.WifiServerSocket;
 import com.lwm.util.ToolUtils;
