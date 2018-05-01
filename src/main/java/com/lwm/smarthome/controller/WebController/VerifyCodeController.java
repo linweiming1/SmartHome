@@ -22,7 +22,9 @@ public class VerifyCodeController {
      * @throws
      * @throws IOException
      */
-    @RequestMapping("verifyCode")
+
+
+    @RequestMapping("/verifyCode")
     public void verifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
@@ -44,6 +46,7 @@ public class VerifyCodeController {
     /*
     * 验证码验证
     * */
+
     @ResponseBody
     @RequestMapping("/checkCode")
     public String checkCode(HttpServletRequest request) {

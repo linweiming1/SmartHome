@@ -13,9 +13,7 @@
                 <li>
                     <a href="${ctx}/personalInfo" target="rightFrame">个人信息</a>
                 </li>
-                <li>
-                    <a href="${ctx }/AuthInfo" target="rightFrame">授权情况</a>
-                </li>
+
                 <li>
                     <a onclick="ymPrompt.win({title:'修改密码',height:'230',width:'380',dragOut:false,iframe:true,message:'${ctx}/toPsw'});">修改密码</a>
                 </li>
@@ -23,11 +21,13 @@
         </li>
         <li class="agency">
             <div class="nav-header">
-                <a class="clearfix"> <span>APP管理</span><i class="icon"></i>
+                <a class="clearfix"> <span>授权管理</span><i class="icon"></i>
                 </a>
             </div>
             <ul class="subnav">
-                <li><a href="${ctx }/appUser/list" target="rightFrame">用户列表</a></li>
+                <li>
+                    <a href="${ctx }/AuthInfo" target="rightFrame">授权情况</a>
+                </li>
             </ul>
         </li>
         <li class="agency">

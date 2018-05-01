@@ -31,7 +31,14 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <!-- 配置其他属性 -->
     </bean>
 
-
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">redirect:/views/unauthorized.jsp</prop>
+                <prop key="org.apache.shiro.authz.UnauthenticatedException">redirect:/views/unauthorized.jsp</prop>
+            </props>
+        </property>
+    </bean>-->
     <!-- 配置 JPA 的 EntityManagerFactory -->
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

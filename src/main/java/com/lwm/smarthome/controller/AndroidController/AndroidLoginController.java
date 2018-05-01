@@ -6,6 +6,7 @@ import com.lwm.Wifi.WifiServerSocket;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
 import com.lwm.util.VerifyCodeUtils;
+import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class AndroidLoginController {
     * 安卓端的登陆验证接口
     * 登陆成功返回”1“，失败返回”0“
     * */
+    @RequiresGuest
     @RequestMapping("/androidLoginValide")
     public String androidLoginValide(@RequestParam(value = "userName") String userName, @RequestParam(value = "passWord") String passWord) {
         String returnMsg = null;
@@ -45,6 +47,10 @@ public class AndroidLoginController {
             returnMsg = "0";
             logger.info("安卓端用户登录失败！");
         }
+
+
+
+
         return returnMsg;
     }
 

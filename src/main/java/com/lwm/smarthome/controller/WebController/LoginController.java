@@ -4,6 +4,11 @@ import com.lwm.common.Weather;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
 import com.lwm.util.WeatherUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresGuest;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +40,7 @@ public class LoginController {
      * @param request
      * @return
      */
+
     @RequestMapping("/loginValide")
     public String loginValide(HttpServletRequest request, HttpSession session, Model model) {
 
@@ -51,13 +57,23 @@ public class LoginController {
         String passWord = request.getParameter("passWord");
         //核对用户名和密码
         SysUser current_user = sysUserService.findByUserNameAndPassword(userName, passWord);
-
-        if (current_user != null) {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (current_user != null&&!currentUser.isAuthenticated()) {
             logger.info("login successfully");
             model.addAttribute("loginTime", current_user.getLoginTime());
             current_user.setLoginTime(new Date());
             session.setAttribute("current_user", current_user);
             sysUserService.updateSysUser(current_user);
+
+
+           UsernamePasswordToken token = new UsernamePasswordToken(userName,passWord);
+          //  token.setRememberMe(true);
+            try {
+                 currentUser.login(token);
+            } catch (AuthenticationException e) {
+                logger.info("the name or the password  is wrong !");
+            }
+
         } else {
             logger.info("the name or the password  is wrong !");
             request.setAttribute("err", "username or password is wrong!!!");
@@ -65,11 +81,9 @@ public class LoginController {
         }
 
         Weather weather = WeatherUtil.getWeather("福州");
-
         if (weather == null) {
             logger.info("获取信息失败");
         }
-
         session.setAttribute("entityData", weather);
         return "main";
     }
@@ -78,7 +92,7 @@ public class LoginController {
     /*
     * 注销账号
     * */
-    @RequestMapping("logout")
+    @RequestMapping("/logout")
     public String logout(HttpSession httpSession) {
         logger.info("login out");
         httpSession.removeAttribute("current_user");

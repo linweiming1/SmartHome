@@ -5,6 +5,7 @@ import com.lwm.smarthome.entity.Rooms;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.RoomsService;
 import com.lwm.smarthome.service.SysUserService;
+import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
 /*
 * 这里是用来与安卓端进行数据的交互
 * */
+@RequiresGuest
 @Controller
 @RequestMapping("/androidData")
 public class AndroidRoomController {

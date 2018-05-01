@@ -27,7 +27,17 @@
                         <c:if test="${current_user.authLevel eq '3'}">游客</c:if>
                     </div>
                 </div>
-
+                <div class="kv-item clearfix">
+                    <label>拥有的权限：</label>
+                    <div class="kv-item-content">
+                       <ul>
+                           <li>空调查看和控制</li>
+                           <li>电冰箱查看和控制</li>
+                           <li>灯的查看和控制</li>
+                           <li>电视的查看和控制</li>
+                       </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

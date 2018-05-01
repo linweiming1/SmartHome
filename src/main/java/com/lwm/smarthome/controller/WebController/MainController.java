@@ -4,6 +4,9 @@ import com.lwm.common.Weather;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
 import com.lwm.util.WeatherUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +25,10 @@ public class MainController {
     @Autowired
     SysUserService sysUserService;
 
+
     @RequestMapping("workbench")
-    public String workbench(Model model,HttpSession session) {
+    @RequiresPermissions("admin:list")
+    public String workbench(Model model, HttpSession session) {
         logger.info("-------workbench-------------");
         Weather weather = WeatherUtil.getWeather("福州");
         if (weather == null) {
@@ -36,11 +41,13 @@ public class MainController {
     }
 
     @RequestMapping("personalInfo")
+    @RequiresPermissions("admin:list")
     public String personalInfo() {
         return "info";
     }
 
     @RequestMapping("AuthInfo")
+    @RequiresPermissions("admin:list")
     public String AuthInfo(HttpSession session) {
         SysUser sysUser = (SysUser) session.getAttribute("current_user");
         String returnPage = null;
@@ -55,6 +62,7 @@ public class MainController {
     }
 
     @RequestMapping("updatePsw")
+    @RequiresPermissions("admin:list")
     public String updatePsw(HttpSession httpSession, HttpServletRequest request, Model model) {
 
         logger.info("-------updatePsw-------------");

@@ -37,7 +37,15 @@ public class SysUser implements Serializable {
     private String vcode;
     @Column(name = "isBinding")
     private String isBinding;
-    @OneToMany(fetch=FetchType.EAGER,cascade={CascadeType.REMOVE},mappedBy="sysUser")
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "roleId")})
+    private Set<Role> roles;
+
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, mappedBy = "sysUser")
     private Set<Rooms> rooms = new HashSet<>();
 
     public Set<Rooms> getRooms() {
@@ -136,4 +144,11 @@ public class SysUser implements Serializable {
         this.vcode = vcode;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }
