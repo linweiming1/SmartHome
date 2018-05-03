@@ -3,6 +3,8 @@ package com.lwm.smarthome.controller.WebController;
 import com.lwm.smarthome.entity.AirConditioner;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.AirConditionerService;
+import com.lwm.smarthome.shiro.PermissionName;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class AirConditionerController {
     * 此action用于列表
     * */
     @RequestMapping("/list")
+    @RequiresPermissions("airCondition:list")
+    @PermissionName("空调查看")
     public String list(Model model, HttpServletRequest request, HttpSession session) {
         SysUser currSysUser = (SysUser) session.getAttribute("current_user");
         if (currSysUser == null) {
@@ -70,6 +74,8 @@ public class AirConditionerController {
     * */
     @ResponseBody
     @RequestMapping("/changeStatus")
+    @RequiresPermissions("airCondition:changeStatus")
+    @PermissionName("改变空调状态")
     public String changeStatus(@RequestParam() String id) {
         String returnMsg = null;
         AirConditioner airConditioner = airConditionerService.getAirConditioner(Long.parseLong(id));
@@ -84,6 +90,8 @@ public class AirConditionerController {
     * 此接口用于添加
     * */
     @RequestMapping("/toAdd")
+    @RequiresPermissions("airCondition:toAdd")
+    @PermissionName("添加新空调")
     public String toAdd() {
         return "airCondition/add";
     }
@@ -109,6 +117,8 @@ public class AirConditionerController {
     * 此action用于跳转到设备的调整温度
     * */
     @RequestMapping("/toAdjust")
+    @RequiresPermissions("airCondition:toAdjust")
+    @PermissionName("改变空调温度")
     public String toAdjust(@RequestParam(value = "deviceId") String deviceId, Model model) {
 
         model.addAttribute("deviceId", deviceId);
@@ -120,6 +130,8 @@ public class AirConditionerController {
     * */
     @ResponseBody
     @RequestMapping("/adjust")
+    @RequiresPermissions("airCondition:temperature")
+    @PermissionName("改变空调温度")
     public String adjust(@RequestParam(value = "expTemperature") String expTemperature, @RequestParam(value = "deviceId") String deviceId) {
         String returnMsg = null;
         logger.info("这里是调整温度的控制器" + expTemperature + deviceId);
@@ -134,6 +146,8 @@ public class AirConditionerController {
     * */
     @ResponseBody
     @RequestMapping(value = "/binding", method = RequestMethod.POST)
+    @RequiresPermissions("airCondition:bindingDevice")
+    @PermissionName("绑定空调")
     public String binding(@RequestBody AirConditioner airConditioner, HttpSession session) {
         String returnMsg = null;
         logger.info("设备绑定成功");
@@ -148,6 +162,8 @@ public class AirConditionerController {
     * */
     @ResponseBody
     @RequestMapping("/unBindingDevice")
+    @RequiresPermissions("airCondition:unBindingDevice")
+    @PermissionName("解绑空调")
     public String deleteDevice(@RequestParam() String id) {
         String returnMsg = null;
         logger.info("已解绑id为" + id + "的空调设备");

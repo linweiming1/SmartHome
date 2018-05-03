@@ -39,6 +39,9 @@ public class SysUserService {
         SysUser sysUser = sysUserDao.getByEmail(email);
         return sysUser;
     }
+    public SysUser findById(String id){
+        return sysUserDao.getOne(Long.parseLong(id));
+    }
 
     public void updateSysUser(SysUser sysUser) {
         SysUser sysUser1 = sysUserDao.getOne(sysUser.getId());

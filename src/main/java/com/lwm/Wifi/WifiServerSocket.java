@@ -1,8 +1,10 @@
 package com.lwm.Wifi;
 
 import com.lwm.app.AppServiceSocket;
+import com.lwm.smarthome.dao.FreezerDao;
 import com.lwm.smarthome.dao.LighterDao;
 import com.lwm.smarthome.dao.SysUserDao;
+import com.lwm.smarthome.entity.Freezer;
 import com.lwm.smarthome.entity.Lighter;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.LightService;
@@ -143,27 +145,39 @@ public class WifiServerSocket extends Thread {
                         String macAddress = strings[1];//设备的mac地址
                         String data = strings[2];//具体数据
                         String status = strings[3];//状态
-                        if (mStrName == null) {
-                            logger.info("please send the family Id to server first");
-                        } else {
+                        if (mStrName != null) {
                             logger.info("begin to update the " + mStrName + "'s data," +
                                     "device type is " + deviceType + " macAddress is " + macAddress + ",data is " + data);
 
                             ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
                             SysUserDao sysUserDao = (SysUserDao) context.getBean("sysUserDao");
-                            LighterDao lighterDao = (LighterDao) context.getBean("lighterDao");
                             SysUser sysUser = sysUserDao.findByUserName(mStrName);
-                            Lighter lighter = lighterDao.findBySysUserAndMacAddress(sysUser, macAddress);
-                            lighter.setAddTime(new Date());
-                            lighter.setLuminance(data);
-                            lighterDao.save(lighter);
+                            if (deviceType.equals("light")) {
+                                LighterDao lighterDao = (LighterDao) context.getBean("lighterDao");
+                                Lighter lighter = lighterDao.findBySysUserAndMacAddress(sysUser, macAddress);
+                                lighter.setAddTime(new Date());
+                                lighter.setLuminance(data);
+                                lighterDao.save(lighter);
+                                logger.info("亮度更新成功");
+                            }
+                            if (deviceType == "freezer") {
+                                FreezerDao freezerDao = (FreezerDao) context.getBean("freezerDao");
+                                Freezer freezer = freezerDao.findBySysUserAndMacAddress(sysUser, macAddress);
+                                freezer.setAddTime(new Date());
+                                freezer.setCurrTemperature(data);
+                                freezerDao.save(freezer);
+                                logger.info("温度更新成功");
+                            }
+
+                        } else {
+                            logger.info("please send the family Id to server first");
 
 
                         }
 
                     }
 
-
+                    msg = null;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -188,7 +202,7 @@ public class WifiServerSocket extends Thread {
          * @param strName
          * @param msg
          */
-        private void sendToAPP(String strName, byte[] msg) {
+        private   void sendToAPP(String strName, byte[] msg) {
             System.out.println("sessionId:" + strName);
 
             if (AppServiceSocket.getAcceptorSessions().get(strName) != null) {

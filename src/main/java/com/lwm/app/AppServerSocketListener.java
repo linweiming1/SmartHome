@@ -2,7 +2,9 @@ package com.lwm.app;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
+/*
+* 添加侦听
+* */
 public class AppServerSocketListener implements ServletContextListener {
 
     private AppServiceSocket appServiceSocket;

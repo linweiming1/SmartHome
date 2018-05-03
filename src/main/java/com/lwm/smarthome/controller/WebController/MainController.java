@@ -3,6 +3,7 @@ package com.lwm.smarthome.controller.WebController;
 import com.lwm.common.Weather;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.SysUserService;
+import com.lwm.smarthome.shiro.PermissionName;
 import com.lwm.util.WeatherUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -27,45 +28,40 @@ public class MainController {
 
 
     @RequestMapping("workbench")
-    @RequiresPermissions("admin:list")
     public String workbench(Model model, HttpSession session) {
-        logger.info("-------workbench-------------");
         Weather weather = WeatherUtil.getWeather("福州");
         if (weather == null) {
             return "netfail";
         }
-
-
         model.addAttribute("entity", weather);
         return "workbench";
     }
 
     @RequestMapping("personalInfo")
-    @RequiresPermissions("admin:list")
     public String personalInfo() {
         return "info";
     }
 
     @RequestMapping("AuthInfo")
     @RequiresPermissions("admin:list")
+    @PermissionName("用户列表")
     public String AuthInfo(HttpSession session) {
         SysUser sysUser = (SysUser) session.getAttribute("current_user");
         String returnPage = null;
-
 
         return returnPage;
     }
 
     @RequestMapping("toPsw")
+    @RequiresPermissions("user:updatePws")
+    @PermissionName("用户修改密码")
     public String toPsw() {
         return "psw";
     }
 
     @RequestMapping("updatePsw")
-    @RequiresPermissions("admin:list")
     public String updatePsw(HttpSession httpSession, HttpServletRequest request, Model model) {
 
-        logger.info("-------updatePsw-------------");
         // 从session　中取出来用户数据
         SysUser aUser = (SysUser) httpSession.getAttribute("current_user");
         String msg = null;

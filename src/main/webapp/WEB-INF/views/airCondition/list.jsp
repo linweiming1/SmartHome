@@ -117,7 +117,7 @@
                 width: '380',
                 dragOut: false,
                 iframe: true,
-                message: '${ctx}/airCondition/toAdjust?deviceId='+deviceId,
+                message: '${ctx}/airCondition/toAdjust?deviceId=' + deviceId,
                 handler: function (result) {
                     location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
                 }, btn: [['确定', 'yes']]
@@ -135,11 +135,25 @@
                 url: '${ctx}/airCondition/changeStatus?id=' + device_id,
                 dataType: "text",
                 success: function (result) {
+                    if (result != "ok") {
+                        ymPrompt.win({
+                            title: '切换状态',
+                            height: '320',
+                            width: '380',
+                            dragOut: false,
+                            iframe: true,
+                            message: '${ctx}/airCondition/changeStatus?id=1',
+                            handler: function () {
+                                location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                            },
+                            btn: [['确定', 'yes']]
+                        });
+                    }else{
                     ymPrompt.alert({
                         message: '设备状态切换成功', title: '成功信息', handler: function () {
                             location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
                         }
-                    })
+                    })}
                 }
             });
         })
@@ -177,11 +191,26 @@
                 url: '${ctx}/airCondition/unBindingDevice?id=' + delete_id,
                 dataType: "text",
                 success: function (result) {
-                    ymPrompt.alert({
+                    if(result!="ok"){
+                        ymPrompt.win({
+                            title: '解绑设备',
+                            height: '320',
+                            width: '380',
+                            dragOut: false,
+                            iframe: true,
+                            message: '${ctx}/airCondition/unBindingDevice?id=1',
+                            handler: function () {
+                                location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                            },
+                            btn: [['确定', 'yes']]
+                        });
+                    }
+                    else{   ymPrompt.alert({
                         message: '解绑成功', title: '成功信息', handler: function () {
                             location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
                         }
-                    })
+                    })}
+
                 }
             });
         }

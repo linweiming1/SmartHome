@@ -9,11 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FreezerDao extends JpaRepository<Freezer,Long>{
+public interface FreezerDao extends JpaRepository<Freezer, Long> {
 
     Page<Freezer> findBySysUser(Pageable pageable, SysUser sysUser);
 
     Page<Freezer> findBySysUserAndEquipmentName(Pageable pageable, SysUser sysUser, String equipmentName);
+
+    Freezer findBySysUserAndMacAddress(SysUser sysUser, String macAddress);
 
     Freezer findById(Long id);
 

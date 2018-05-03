@@ -1,6 +1,7 @@
 package com.lwm.app;
 
 import java.net.InetSocketAddress;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 /**
  * APP移动端与服务器端的长连接
- *
  */
 public class AppServiceSocket extends Thread {
     private static IoAcceptor acceptor = null;
@@ -50,14 +50,14 @@ public class AppServiceSocket extends Thread {
         @Override
         public void sessionCreated(IoSession session) throws Exception {
             // TODO 服务器与客户端创建连接
-            // System.out.println("服务器与客户端创建连接...");
+             System.out.println("服务器与客户端创建连接...");
             super.sessionCreated(session);
         }
 
         @Override
         public void sessionOpened(IoSession session) throws Exception {
             // TODO 服务器与客户端连接打开
-            // System.out.println("服务器与客户端连接打开...");
+             System.out.println("服务器与客户端连接打开...");
             super.sessionOpened(session);
         }
 
@@ -69,15 +69,17 @@ public class AppServiceSocket extends Thread {
 
             String str = message.toString().trim();
 
-            IoSessionMap.put(str, session);
+            IoSessionMap.put("wangtianlong", session);
             System.out.println("客户端发送的数据:" + str);
-           acceptor.getManagedSessions().get(session.getId()).write("连接服务器成功");
+            session.write(new Date().toString());
+            acceptor.getManagedSessions().get(session.getId()).write("连接服务器成功");
 
         }
 
         @Override
         public void messageSent(IoSession session, Object message)
                 throws Exception {
+
             super.messageSent(session, message);
 
         }

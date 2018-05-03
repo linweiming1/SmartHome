@@ -29,6 +29,7 @@ public class LighterController {
     LightService lightService;
 
     @RequestMapping("/list")
+
     public String list(Model model, HttpServletRequest request, HttpSession session) {
         SysUser currSysUser = (SysUser) session.getAttribute("current_user");
         if (currSysUser == null) {

@@ -6,6 +6,7 @@
        value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}"/>
 <c:set var="r" value="${ctx }/resources"/>
 <link rel="stylesheet" id='skin' type="text/css" href="${r }/prompt/skin/qq/ymPrompt.css"/>
+<meta http-equiv="refresh" content="3;url=${ctx }/freezer/list?pageOffSet=${requestScope.page.getNumber()}">
 <link rel="stylesheet" href="${r }/common/css/sapar.css"/>
 <div id="saper-container">
     <div id="saper-hd"></div>

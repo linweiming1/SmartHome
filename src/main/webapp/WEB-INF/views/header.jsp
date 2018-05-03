@@ -22,9 +22,9 @@
     margin: 0 11px 0 0;">
 
             <span>欢迎您:</span>
-            <span>${current_user.userName }</span></br>
+            <span>${current_user_Info.userName }</span></br>
             <span>上次登录时间:</span>
-            <span>${requestScope.loginTime }</span></br>
+            <span>${current_user_Info.loginTime }</span></br>
 
             <div class="tool clearfix">
                 <a class="tips" href="${ctx }/workbench" target="rightFrame">我的主页</a>&nbsp;

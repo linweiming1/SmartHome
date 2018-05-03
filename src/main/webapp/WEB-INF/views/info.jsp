@@ -15,27 +15,27 @@
                 <div class="kv-item clearfix">
                     <label>用户：</label>
                     <div class="kv-item-content">
-                        ${current_user.userName }
+                        ${current_user_Info.userName }
                     </div>
                 </div>
 
                 <div class="kv-item clearfix">
                     <label>角色：</label>
                     <div class="kv-item-content">
-                        <c:if test="${current_user.authLevel eq '1'}">管理员</c:if>
-                        <c:if test="${current_user.authLevel eq '2'}">普通用户</c:if>
-                        <c:if test="${current_user.authLevel eq '3'}">游客</c:if>
+                        <c:if test="${current_user_Info.authLevel eq '1'}">管理员</c:if>
+                        <c:if test="${current_user_Info.authLevel eq '2'}">普通用户</c:if>
+                        <c:if test="${current_user_Info.authLevel eq '3'}">游客</br>授权者：${current_user.userName}</c:if>
                     </div>
                 </div>
                 <div class="kv-item clearfix">
                     <label>拥有的权限：</label>
                     <div class="kv-item-content">
-                       <ul>
-                           <li>空调查看和控制</li>
-                           <li>电冰箱查看和控制</li>
-                           <li>灯的查看和控制</li>
-                           <li>电视的查看和控制</li>
-                       </ul>
+                        <ul>
+                            <li>空调查看和控制</li>
+                            <li>电冰箱查看和控制</li>
+                            <li>灯的查看和控制</li>
+                            <li>电视的查看和控制</li>
+                        </ul>
                     </div>
                 </div>
             </div>

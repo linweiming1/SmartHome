@@ -58,18 +58,28 @@ public class LoginController {
         //核对用户名和密码
         SysUser current_user = sysUserService.findByUserNameAndPassword(userName, passWord);
         Subject currentUser = SecurityUtils.getSubject();
-        if (current_user != null&&!currentUser.isAuthenticated()) {
+        if (current_user != null && !currentUser.isAuthenticated()) {
             logger.info("login successfully");
             model.addAttribute("loginTime", current_user.getLoginTime());
             current_user.setLoginTime(new Date());
-            session.setAttribute("current_user", current_user);
+
+            if (current_user.getAuthLevel().equals("3")) {
+                SysUser auth_sysUser = sysUserService.findById(current_user.getAuthorizer());
+                logger.info(auth_sysUser.getUserName());
+                session.setAttribute("current_user_Info",current_user);
+                session.setAttribute("current_user", auth_sysUser);
+
+            } else {
+                session.setAttribute("current_user_Info", current_user);
+                session.setAttribute("current_user", current_user);
+            }
             sysUserService.updateSysUser(current_user);
 
 
-           UsernamePasswordToken token = new UsernamePasswordToken(userName,passWord);
-          //  token.setRememberMe(true);
+            UsernamePasswordToken token = new UsernamePasswordToken(userName, passWord);
+            //  token.setRememberMe(true);
             try {
-                 currentUser.login(token);
+                currentUser.login(token);
             } catch (AuthenticationException e) {
                 logger.info("the name or the password  is wrong !");
             }
@@ -90,7 +100,7 @@ public class LoginController {
 
 
     /*
-    * 注销账号
+    * 退出登录
     * */
     @RequestMapping("/logout")
     public String logout(HttpSession httpSession) {

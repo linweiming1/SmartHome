@@ -42,6 +42,7 @@ public class AndroidLoginController {
         SysUser sysUser = sysUserService.findByUserNameAndPassword(userName, passWord);
         if (sysUser != null) {
             returnMsg = "1";
+
             logger.info("安卓端用户登录成功！");
         } else {
             returnMsg = "0";
@@ -146,7 +147,7 @@ public class AndroidLoginController {
         returnMsg = "1";
        // byte[] msg1 = ToolUtils.stringToByte(macAddress);
         WifiServerSocket.ProcessSocketData psd = WifiServerSocket.getSocketMap()
-                .get(new String(macAddress));
+                .get("linweiming");
         byte[] msg2={'L','E','D','1'};
         if (psd != null) {
             // TODO 8266在线状态
