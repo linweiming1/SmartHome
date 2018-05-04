@@ -31,10 +31,9 @@
                     <label>拥有的权限：</label>
                     <div class="kv-item-content">
                         <ul>
-                            <li>空调查看和控制</li>
-                            <li>电冰箱查看和控制</li>
-                            <li>灯的查看和控制</li>
-                            <li>电视的查看和控制</li>
+                            <c:forEach items="${requestScope.permissionName}" var="d"> <li>${d.permissionName}</li></c:forEach>
+
+
                         </ul>
                     </div>
                 </div>

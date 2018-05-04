@@ -3,6 +3,8 @@ package com.lwm.smarthome.controller.WebController;
 import com.lwm.smarthome.entity.Lighter;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.LightService;
+import com.lwm.smarthome.shiro.PermissionName;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,8 @@ public class LighterController {
     LightService lightService;
 
     @RequestMapping("/list")
-
+    @RequiresPermissions("lighter:list")
+    @PermissionName("电灯查看")
     public String list(Model model, HttpServletRequest request, HttpSession session) {
         SysUser currSysUser = (SysUser) session.getAttribute("current_user");
         if (currSysUser == null) {

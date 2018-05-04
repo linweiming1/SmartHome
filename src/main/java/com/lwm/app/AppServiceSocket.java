@@ -30,7 +30,7 @@ public class AppServiceSocket extends Thread {
                 new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
         acceptor.setHandler(new DemoServerHandler());
         acceptor.getSessionConfig().setReadBufferSize(2048);
-        acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
+        acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 100);
 
         try {
             acceptor.bind(new InetSocketAddress(10011));

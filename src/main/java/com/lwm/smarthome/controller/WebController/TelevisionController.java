@@ -4,6 +4,8 @@ import com.lwm.smarthome.controller.WebController.LighterController;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.entity.Television;
 import com.lwm.smarthome.service.TelevisionService;
+import com.lwm.smarthome.shiro.PermissionName;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class TelevisionController {
     TelevisionService televisionService;
 
     @RequestMapping("/list")
+    @RequiresPermissions("television:list")
+    @PermissionName("电视机查看")
     public String list(Model model, HttpServletRequest request, HttpSession session) {
         SysUser currSysUser = (SysUser) session.getAttribute("current_user");
         if (currSysUser == null) {

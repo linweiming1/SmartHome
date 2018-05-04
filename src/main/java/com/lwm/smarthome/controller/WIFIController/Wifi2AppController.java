@@ -2,6 +2,7 @@ package com.lwm.smarthome.controller.WIFIController;
 /*
 *wifi单向与app的连接的中间桥梁接口
 * */
+
 import com.lwm.app.AppServiceSocket;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.core.session.IoSessionAttributeMap;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 
 
-
 @Controller
 public class Wifi2AppController {
     private static Logger logger = LoggerFactory.getLogger(Wifi2AppController.class);
@@ -24,14 +24,13 @@ public class Wifi2AppController {
     public String testMina() {
         String returnMsg = null;
         Map<String, IoSession> ioSessionMap;
-       ioSessionMap=  AppServiceSocket.getAcceptorSessions();
-        IoSession ioSession=ioSessionMap.get("wangtianlong");
-        if (ioSession!= null) {
-           ioSession.write("abc");
-            System.out.println("已发送给客户端");
-
+        ioSessionMap = AppServiceSocket.getAcceptorSessions();
+        IoSession ioSession = ioSessionMap.get("wangtianlong");
+        if (ioSession != null) {
+            ioSession.write("abc");
+            logger.info("已发送给客户端");
         } else {
-            System.out.println("客户端没上线");
+            logger.info("客户端没上线");
         }
 
         return returnMsg;

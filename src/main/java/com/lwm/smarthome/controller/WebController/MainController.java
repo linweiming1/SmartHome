@@ -1,7 +1,9 @@
 package com.lwm.smarthome.controller.WebController;
 
 import com.lwm.common.Weather;
+import com.lwm.smarthome.entity.Permission;
 import com.lwm.smarthome.entity.SysUser;
+import com.lwm.smarthome.service.PermissionService;
 import com.lwm.smarthome.service.SysUserService;
 import com.lwm.smarthome.shiro.PermissionName;
 import com.lwm.util.WeatherUtil;
@@ -17,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -25,7 +31,8 @@ public class MainController {
     public static Logger logger = LoggerFactory.getLogger(MainController.class);
     @Autowired
     SysUserService sysUserService;
-
+    @Autowired
+    PermissionService permissionService;
 
     @RequestMapping("workbench")
     public String workbench(Model model, HttpSession session) {
@@ -38,7 +45,11 @@ public class MainController {
     }
 
     @RequestMapping("personalInfo")
-    public String personalInfo() {
+    public String personalInfo(Model model, HttpSession session) {
+        SysUser sysUser = (SysUser) session.getAttribute("current_user_Info");
+        Set<Permission> permissionsSet = new HashSet<>();
+        permissionsSet = permissionService.getPermissionNameBySysUser(sysUser);
+        model.addAttribute("permissionName", permissionsSet);
         return "info";
     }
 
