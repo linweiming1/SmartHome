@@ -35,11 +35,17 @@ public class SysUserService {
         return sysUser;
     }
 
+    public List<SysUser> findAllByAuthorizer(String authorizer) {
+        List<SysUser> sysUserList = sysUserDao.findAllByAuthorizer(authorizer);
+        return sysUserList;
+    }
+
     public SysUser findByEmail(String email) {
         SysUser sysUser = sysUserDao.getByEmail(email);
         return sysUser;
     }
-    public SysUser findById(String id){
+
+    public SysUser findById(String id) {
         return sysUserDao.getOne(Long.parseLong(id));
     }
 
@@ -75,4 +81,7 @@ public class SysUserService {
 
     }
 
+    public void deleteVisitor(String id) {
+        sysUserDao.delete(Long.parseLong(id));
+    }
 }

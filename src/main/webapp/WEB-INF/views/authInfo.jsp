@@ -18,10 +18,6 @@
                     <div class="kv-item-content">
                         <a class="sapar-btn sapar-btn-recom query-btn add">授权新游客</a>
                     </div>
-                    <label>&nbsp;</label>
-                    <div class="kv-item-content">
-                        <a class="sapar-btn sapar-btn-recom query-btn refresh">刷新</a>
-                    </div>
                 </div>
             </div>
             <!--表格开始-->
@@ -44,16 +40,14 @@
                         <c:if test="${pager.totalRecord == 0 }">
                             <tr><td colspan="4">暂无记录</td></tr>
                         </c:if>
-                        <c:forEach items="${pager.datas}" var="d" varStatus="v">
+                        <c:forEach items="${requestScope.sysUserList}" var="d" varStatus="v">
                             <tr>
                                 <td>${v.index + 1 }</td>
-                                <td>${d.username }</td>
-                                <td>${d.password }</td>
-                                <td>${d.password }</td>
-                                <td>${d.password }</td>
+                                <td>${d.userName }</td>
+                                <td>${d.passWord }</td>
+                                <td>游客</td>
+                                <td><a href="${ctx }/showVisitorPermission?id=${d.id }">详情</a> </td>
                                 <td>
-                                    <a class="edit" data="${d.id }">[编辑]</a>
-                                    &nbsp;&nbsp;
                                     <a class="delete quit-btn exit" data="${d.id }">[删除]</a>
                                 </td>
                             </tr>
@@ -61,9 +55,6 @@
                         </tbody>
                     </table>
 
-                    <jsp:include page="../views/common/pager.jsp">
-                        <jsp:param value="${pager.totalRecord }" name="items"/>
-                    </jsp:include>
                 </div>
             </div>
             <!--表格结束-->
@@ -80,17 +71,20 @@
         })
 
         $('.add').click(function() {
-            ymPrompt.win({title:'新增',height:'170',width:'380',dragOut:false,iframe:true,message:'${ctx}/appUser/toAdd',handler:refresh});
+            ymPrompt.win({title:'新增',height:'270',width:'380',
+                dragOut:false,iframe:true,
+                message:'${ctx}/toAddVisitor',
+                handler:function (result) {
+                    location.href = "${ctx }/authInfo";
+                }}
+                );
         })
 
-        $('.edit').click(function() {
-            var id = $(this).attr("data");
-            ymPrompt.win({title:'修改',height:'170',width:'380',dragOut:false,iframe:true,message:'${ctx}/appUser/toUpdate?appUser.id=' + id,handler:refresh});
-        })
+
 
         $('.delete').click(function() {
             delete_id = $(this).attr("data");
-            ymPrompt.confirmInfo({message:'您确定删除此信息？',handler:handlerDel});
+            ymPrompt.confirmInfo({message:'您确定删除此游客？',handler:handlerDel});
         })
     });
 
@@ -99,11 +93,10 @@
         if(tp=='ok'){
             $.ajax({
                 type : "GET",
-                url : '${ctx}/appUser/delete?appUser.id=' + delete_id,
+                url : '${ctx}/deleteVisitor?id=' + delete_id,
                 dataType : "text",
                 success : function(result) {
-
-                    refresh();
+                    location.href = "${ctx }/authInfo";
                 }
             });
         }

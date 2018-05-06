@@ -106,6 +106,7 @@ public class LoginController {
     public String logout(HttpSession httpSession) {
         logger.info("login out");
         httpSession.removeAttribute("current_user");
+        httpSession.removeAttribute("current_user_info");
         return "forward:/index.jsp";
     }
 

@@ -26,7 +26,7 @@
             </div>
             <ul class="subnav">
                 <li>
-                    <a href="${ctx }/AuthInfo" target="rightFrame">授权情况</a>
+                    <a href="${ctx }/authInfo" target="rightFrame">授权情况</a>
                 </li>
             </ul>
         </li>
