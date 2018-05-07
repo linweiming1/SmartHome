@@ -1,6 +1,8 @@
 package com.lwm.common;
 
-
+/*
+* 天气类中的具体信息
+* */
 public class WeatherIndex {
 
 	private String title;//穿衣

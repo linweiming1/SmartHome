@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-
+/*
+* 电灯的dao层
+* */
 @Repository
 public interface LighterDao extends PagingAndSortingRepository<Lighter, Long> {
     Lighter findById(long id);

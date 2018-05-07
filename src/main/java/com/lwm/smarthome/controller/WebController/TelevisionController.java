@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.lwm.util.AppConstant.PAGESIZE;
-
+/*
+* 电视控制器
+* */
 @Controller
 @RequestMapping("/television")
 public class TelevisionController {

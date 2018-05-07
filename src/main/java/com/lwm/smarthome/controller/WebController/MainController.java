@@ -29,7 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-
+/*
+* web端主要的控制器
+* */
 @Controller
 public class MainController {
 
@@ -119,6 +121,11 @@ public class MainController {
         sysUser.setAuthorizer(String.valueOf(currUser.getId()));
         sysUser.setCreateTime(new Date());
         sysUser.setFamilyName(currUser.getFamilyName());
+        Role role = new Role();
+        role.setRoleName(sysUser.getUserName());
+        Set<Role> roles = new HashSet();
+        roleService.save(roles);
+        sysUser.setRoles(roles);
         sysUserService.saveSysUser(sysUser);
         return returnMsg;
     }

@@ -31,7 +31,6 @@ import static java.io.FileDescriptor.out;
 /**
  * 硬件端与服务器端的长连接
  */
-
 public class WifiServerSocket extends Thread {
     private static Logger logger = LoggerFactory.getLogger(WifiServerSocket.class);
     private ServletContext servletContext;

@@ -1,5 +1,7 @@
 package com.lwm.util;
-
+/*
+* 用于将特殊的字符串转为字符数组的工具类
+* */
 public class ToolUtils {
     public static byte[] stringToByte(String str) {
         byte[] bytes = null;

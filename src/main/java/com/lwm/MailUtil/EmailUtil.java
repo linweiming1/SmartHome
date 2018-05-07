@@ -2,7 +2,9 @@ package com.lwm.MailUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/*
+* 这是邮件工具类
+* */
 public class EmailUtil {
     /**
      * 发送邮件方法

@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
+/*
+* 电冰箱的dao层
+* */
 @Repository
 public interface FreezerDao extends JpaRepository<Freezer, Long> {
 

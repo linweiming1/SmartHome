@@ -1,11 +1,7 @@
 package com.lwm.smarthome.controller.WIFIController;
-/*
-*wifi单向与app的连接的中间桥梁接口
-* */
 
 import com.lwm.app.AppServiceSocket;
 import org.apache.mina.core.session.IoSession;
-import org.apache.mina.core.session.IoSessionAttributeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,7 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
-
+/*
+*wifi单向与app的连接的中间桥梁接口
+* */
 @Controller
 public class Wifi2AppController {
     private static Logger logger = LoggerFactory.getLogger(Wifi2AppController.class);

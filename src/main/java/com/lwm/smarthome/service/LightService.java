@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+/*
+* 电灯的service层
+* */
 @Service
 public class LightService {
     @Autowired

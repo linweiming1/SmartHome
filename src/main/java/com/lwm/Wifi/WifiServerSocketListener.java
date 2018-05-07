@@ -3,7 +3,9 @@ package com.lwm.Wifi;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
+/*
+* 为硬件端添加的监听
+* */
 public class WifiServerSocketListener implements ServletContextListener {
 
     private WifiServerSocket wifiServerSocket;

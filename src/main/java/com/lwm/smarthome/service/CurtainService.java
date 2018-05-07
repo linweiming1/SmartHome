@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-
+/*
+* 窗帘的service层
+* */
 @Service
 public class CurtainService {
     @Autowired

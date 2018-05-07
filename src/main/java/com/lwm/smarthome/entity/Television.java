@@ -2,7 +2,9 @@ package com.lwm.smarthome.entity;
 
 import javax.persistence.*;
 import java.util.Date;
-
+/*
+* 电视实体类
+* */
 @Entity
 @Table(name = "television")
 public class Television {

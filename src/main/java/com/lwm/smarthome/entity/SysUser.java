@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /*
-*用户表
+*用户实体类
 * author：linweiming
 * */
 @Entity

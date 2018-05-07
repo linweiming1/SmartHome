@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
+/*
+* 空调的service层
+* */
 @Service
 public class AirConditionerService {
     @Autowired

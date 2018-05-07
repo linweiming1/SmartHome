@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+/*
+* 用户的dao层
+* */
 @Repository
 public interface SysUserDao extends JpaRepository<SysUser, Long> {
     public List<SysUser> findAllByAuthorizer(String authorizer);

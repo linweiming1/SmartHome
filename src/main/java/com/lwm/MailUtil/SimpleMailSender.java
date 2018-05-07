@@ -7,7 +7,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Date;
 import java.util.Properties;
-
+/*
+* 发送邮件
+* */
 public class SimpleMailSender  {
     /**
      * 以文本格式发送邮件

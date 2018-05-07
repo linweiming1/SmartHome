@@ -2,7 +2,9 @@ package com.lwm.smarthome.entity;
 
 import javax.persistence.*;
 import java.util.Date;
-
+/*
+* 窗帘的实体类
+* */
 @Entity
 @Table(name = "curtain")
 public class Curtain {

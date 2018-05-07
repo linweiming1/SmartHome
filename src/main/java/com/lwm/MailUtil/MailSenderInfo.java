@@ -1,7 +1,9 @@
 package com.lwm.MailUtil;
 
 import java.util.Properties;
-
+/*
+* 邮件发送的信息
+* */
 public class MailSenderInfo {
 
     // 发送邮件的服务器的IP和端口

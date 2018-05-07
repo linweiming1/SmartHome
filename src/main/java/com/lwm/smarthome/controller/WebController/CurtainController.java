@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.lwm.util.AppConstant.PAGESIZE;
-
+/*
+* 窗帘控制器
+* */
 @Controller
 @RequestMapping("/curtain")
 public class CurtainController {

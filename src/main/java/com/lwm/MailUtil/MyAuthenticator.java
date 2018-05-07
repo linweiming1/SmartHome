@@ -2,7 +2,7 @@ package com.lwm.MailUtil;
 
 import javax.mail.*;
 /**
- 密码验证器
+ 发送邮件用的密码验证器
  */
 public class MyAuthenticator extends Authenticator{
     String userName=null;

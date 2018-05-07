@@ -22,8 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /*
-* linweiming
-*
+* web端登陆验证和登出
 * */
 @Controller
 public class LoginController {

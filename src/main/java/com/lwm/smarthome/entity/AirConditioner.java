@@ -5,7 +5,10 @@ import org.springframework.stereotype.Controller;
 import javax.persistence.*;
 import java.util.Date;
 
-//怎么配置二级缓存的策略怎么指定
+/*
+* 空调的实体类
+* */
+//怎么配置二级缓存的策略怎么指定？
 //@Cacheable()
 @Entity
 @Table(name = "air_conditioner")

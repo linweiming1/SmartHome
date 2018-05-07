@@ -70,7 +70,6 @@ public class AndroidRoomController {
                              @RequestParam(value = "roomName") String roomName) {
         String returnMSg = null;
         SysUser sysUser = sysUserService.findByUserName(userName);
-
         returnMSg = roomsService.deleteRoom(sysUser, roomName);
         logger.info("用户名为" + userName + "的"+roomName+"房间号删除成功");
         return returnMSg;

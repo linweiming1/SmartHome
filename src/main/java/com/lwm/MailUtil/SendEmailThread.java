@@ -1,11 +1,7 @@
 package com.lwm.MailUtil;
 
-
-
-
 /**
- * 发送邮件内部类
- *
+ * 发送邮件内部线程类
  */
 public class SendEmailThread implements Runnable {
     private MailSenderInfo mailInfo;

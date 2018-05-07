@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+/*
+* 房间的dao层
+* */
 @Repository
 public interface RoomsDao extends JpaRepository<Rooms,Long> {
     List<Rooms> findBySysUser(SysUser sysUser);

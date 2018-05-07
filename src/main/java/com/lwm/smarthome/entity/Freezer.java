@@ -2,7 +2,9 @@ package com.lwm.smarthome.entity;
 
 import javax.persistence.*;
 import java.util.Date;
-
+/*
+* 电冰箱的实体类
+* */
 @Entity
 @Table(name = "freezer")
 public class Freezer {

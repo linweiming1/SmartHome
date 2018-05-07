@@ -2,9 +2,7 @@ package com.lwm.common;
 
 /**
  * 天气预报
- * 
  * @author lwm
- * 
  */
 public class Weather {
 
