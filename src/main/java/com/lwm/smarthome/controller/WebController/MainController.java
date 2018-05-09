@@ -17,6 +17,9 @@ import org.apache.shiro.authz.annotation.RequiresUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +31,8 @@ import javax.management.relation.RoleResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
+
+import static com.lwm.util.AppConstant.PAGESIZE;
 
 /*
 * web端主要的控制器
@@ -62,6 +67,9 @@ public class MainController {
         return "info";
     }
 
+    /*
+    * 家庭用户管理游客列表
+    * */
     @RequestMapping("/authInfo")
     @RequiresPermissions("admin:list")
     @PermissionName("用户列表")
@@ -179,6 +187,49 @@ public class MainController {
 
         returnMsg = "ok";
         return returnMsg;
+    }
+
+    @RequestMapping("/toUserList")
+    public String toUserList(HttpServletRequest request, Model model) {
+        String authLevel = "2";
+        String pageOffSet = request.getParameter("pageOffSet");
+
+        int pageOffSetInt = 0;
+        if (pageOffSet != null) {
+            pageOffSetInt = Integer.parseInt(pageOffSet);
+        }
+        Pageable pageable = new PageRequest(pageOffSetInt, 10);
+        Page<SysUser> page = sysUserService.findAllByAuthLevel(pageable, authLevel);
+        model.addAttribute("page", page);
+        return "admin/userList";
+    }
+
+    @RequestMapping("/toVisitorList")
+    public String toVisitorList(@RequestParam(value = "id") String id, @RequestParam(value = "pageOffSet") String pageOffSet, Model model) {
+        List<SysUser> sysUserList = new LinkedList<>();
+        SysUser sysUser = sysUserService.findById(id);
+        sysUserList = sysUserService.findAllByAuthorizer(id);
+        model.addAttribute("sysUserList", sysUserList);
+        model.addAttribute("sysUser", sysUser);
+        model.addAttribute("pageOffSet", pageOffSet);
+        return "admin/visitorList";
+    }
+
+    /*
+      * 此接口用于家庭用户的查询
+      * */
+    @RequestMapping("/searchByUserName")
+    public String searchByEquipmentName(@RequestParam(value = "userName") String userName, Model model, HttpSession session) {
+
+        Pageable pageable = new PageRequest(0, 10);
+        SysUser sysUser = sysUserService.getUser(userName);
+        Page page=null;
+        if(sysUser!=null){
+             page = sysUserService.findById(pageable, sysUser.getId());
+        }
+
+        model.addAttribute("page", page);
+        return "admin/userList";
     }
 
 }

@@ -22,8 +22,8 @@
                 <div class="kv-item clearfix">
                     <label>角色：</label>
                     <div class="kv-item-content">
-                        <c:if test="${current_user_Info.authLevel eq '1'}">管理员</c:if>
-                        <c:if test="${current_user_Info.authLevel eq '2'}">普通用户</c:if>
+                        <c:if test="${current_user_Info.authLevel eq '1'}">平台管理员</c:if>
+                        <c:if test="${current_user_Info.authLevel eq '2'}">家庭用户</c:if>
                         <c:if test="${current_user_Info.authLevel eq '3'}">游客</br>授权者：${current_user.userName}</c:if>
                     </div>
                 </div>
@@ -32,8 +32,6 @@
                     <div class="kv-item-content">
                         <ul>
                             <c:forEach items="${requestScope.permissionName}" var="d"> <li>${d.permissionName}</li></c:forEach>
-
-
                         </ul>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <div class="sidebar">
     <h2 class="sidebar-header">
         <p>功能导航</p>
@@ -19,6 +20,7 @@
                 </li>
             </ul>
         </li>
+        <shiro:lacksRole  name="admin">
         <li class="agency">
             <div class="nav-header">
                 <a class="clearfix"> <span>授权管理</span><i class="icon"></i>
@@ -54,15 +56,22 @@
                        target="rightFrame">电视</a></li>
             </ul>
         </li>
-
+        <li class="agency">
+            <div class="nav-header">
+                <a class="clearfix"> <span>家庭其他情况</span><i class="icon"></i>
+                </a>
+            </div>
+            <ul class="subnav">
+                <li><a href="${ctx }/homeInfo/toEChart"
+                       target="rightFrame">用电量</a></li>
+            </ul>
+        </li>
         <li class="agency">
             <div class="nav-header">
                 <a class="clearfix"> <span>拓展功能</span><i class="icon"></i>
                 </a>
             </div>
             <ul class="subnav">
-                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=3"
-                       target="rightFrame">扫地机器人</a></li>
                 <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=4"
                        target="rightFrame">报警器</a></li>
                 <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=4"
@@ -71,6 +80,19 @@
                        target="rightFrame">AR</a></li>
             </ul>
         </li>
+        </shiro:lacksRole >
+        <shiro:hasRole name="admin">
+        <li class="agency">
+            <div class="nav-header">
+                <a class="clearfix"> <span>家庭用户管理</span><i class="icon"></i>
+                </a>
+            </div>
+            <ul class="subnav">
+                <li><a href="${ctx }/toUserList"
+                       target="rightFrame">家庭用户列表</a></li>
+            </ul>
+        </li>
+        </shiro:hasRole>
     </ul>
 </div>
 <script type="text/javascript" src="${r }/common/js/jquery.js"></script>

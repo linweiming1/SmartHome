@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*
@@ -59,13 +60,17 @@ public class LoginController {
         Subject currentUser = SecurityUtils.getSubject();
         if (current_user != null && !currentUser.isAuthenticated()) {
             logger.info("login successfully");
-            model.addAttribute("loginTime", current_user.getLoginTime());
-            current_user.setLoginTime(new Date());
+
+            Date date = current_user.getLoginTime();
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH：MM：ss");
+
+            model.addAttribute("loginTime", simpleDateFormat.format(date));
 
             if (current_user.getAuthLevel().equals("3")) {
                 SysUser auth_sysUser = sysUserService.findById(current_user.getAuthorizer());
                 logger.info(auth_sysUser.getUserName());
-                session.setAttribute("current_user_Info",current_user);
+                session.setAttribute("current_user_Info", current_user);
                 session.setAttribute("current_user", auth_sysUser);
 
             } else {

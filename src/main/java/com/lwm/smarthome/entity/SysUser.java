@@ -37,7 +37,8 @@ public class SysUser implements Serializable {
     private String vcode;
     @Column(name = "isBinding")
     private String isBinding;
-
+    @Column(name = "area")
+    private String area;
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
@@ -150,5 +151,13 @@ public class SysUser implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

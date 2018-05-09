@@ -20,7 +20,7 @@
                     <div class="kv-item-content">
                         <input type="text" id="equipmentName" name="equipmentName" placeholder="请输入设备名" maxlength="20">
                     </div>
-                    <label>&nbsp;</label>
+                   <label>&nbsp;</label>
                     <div class="kv-item-content">
                         <a class="sapar-btn sapar-btn-recom query-btn search">查询</a>
                     </div>
@@ -148,12 +148,13 @@
                             },
                             btn: [['确定', 'yes']]
                         });
-                    }else{
-                    ymPrompt.alert({
-                        message: '设备状态切换成功', title: '成功信息', handler: function () {
-                            location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
-                        }
-                    })}
+                    } else {
+                        ymPrompt.alert({
+                            message: '设备状态切换成功', title: '成功信息', handler: function () {
+                                location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                            }
+                        })
+                    }
                 }
             });
         })
@@ -191,7 +192,7 @@
                 url: '${ctx}/airCondition/unBindingDevice?id=' + delete_id,
                 dataType: "text",
                 success: function (result) {
-                    if(result!="ok"){
+                    if (result != "ok") {
                         ymPrompt.win({
                             title: '解绑设备',
                             height: '320',
@@ -205,11 +206,13 @@
                             btn: [['确定', 'yes']]
                         });
                     }
-                    else{   ymPrompt.alert({
-                        message: '解绑成功', title: '成功信息', handler: function () {
-                            location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
-                        }
-                    })}
+                    else {
+                        ymPrompt.alert({
+                            message: '解绑成功', title: '成功信息', handler: function () {
+                                location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+                            }
+                        })
+                    }
 
                 }
             });

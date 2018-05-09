@@ -4,7 +4,10 @@ import com.lwm.smarthome.dao.SysUserDao;
 import com.lwm.smarthome.entity.Rooms;
 import com.lwm.smarthome.entity.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,14 +34,21 @@ public class SysUserService {
         SysUser sysUser = sysUserDao.findAllByUserNameAndPassWord(userName, passWord);
         return sysUser;
     }
+  public Page<SysUser> findById(Pageable  pageable,Long id){
+        return sysUserDao.findAllById(pageable,id);
+  }
+  public SysUser findByUserName(String userName){
+      return sysUserDao.getByUserName(userName);
+  }
 
-    public SysUser findByUserName(String userName) {
-        SysUser sysUser = sysUserDao.findByUserName(userName);
-        return sysUser;
-    }
 
     public List<SysUser> findAllByAuthorizer(String authorizer) {
         List<SysUser> sysUserList = sysUserDao.findAllByAuthorizer(authorizer);
+        return sysUserList;
+    }
+
+    public Page<SysUser> findAllByAuthLevel(Pageable pageable, String authLevel){
+        Page<SysUser> sysUserList=sysUserDao.findAllByAuthLevel(pageable,authLevel);
         return sysUserList;
     }
 

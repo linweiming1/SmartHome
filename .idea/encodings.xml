@@ -4,5 +4,8 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/lwm/smarthome/controller/WebController/LoginController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/lwm/smarthome/controller/WebController/VerifyCodeController.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/lwm/util/VerifyCodeUtils.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/dataShow.jsp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/static/images/f6b94e657b474a20968d1ab631f092b3.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/lwm/test/PermissionTest.java" charset="GBK" />
   </component>
 </project>

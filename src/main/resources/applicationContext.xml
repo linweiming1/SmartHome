@@ -63,7 +63,14 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"></property>
     </bean>
-
+    <!--文件上传解析器配置 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 上传文件的总大小和单个文件的大小 -->
+        <property name="maxUploadSize" value="12345678900"/>
+        <!--最大内存大小-->
+        <property name="maxInMemorySize" value="10240100"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
 
     <!-- 配置支持基于注解的事务 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
