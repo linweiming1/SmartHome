@@ -1,5 +1,6 @@
 package com.lwm.smarthome.controller.WebController;
 
+import com.lwm.Wifi.WifiServerSocket;
 import com.lwm.smarthome.entity.Lighter;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.LightService;
@@ -66,6 +67,19 @@ public class LighterController {
         Lighter lighter = lightService.getLighter(Long.parseLong(id));
         logger.info(lighter.getEquipmentName());
         lighter.setStatus(!lighter.isStatus());
+        WifiServerSocket.ProcessSocketData psd = WifiServerSocket.getSocketMap()
+                .get("linweiming");
+        byte[] msg2 = {'L', 'E', 'D', '1'};
+        if (psd != null) {
+            // TODO 8266在线状态
+            psd.send(msg2);
+            logger.info("the app data has been sent to wifi(8266)");
+            returnMsg = "1";
+        } else {
+            // TODO 继电器离线状态
+            logger.info("the socket connection is null,for the wifi(8266) has not connect to the server!");
+            returnMsg = "0";
+        }
         lightService.updateLighter(lighter);
         returnMsg = "ok";
         return returnMsg;

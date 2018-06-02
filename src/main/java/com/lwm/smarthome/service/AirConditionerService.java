@@ -2,6 +2,7 @@ package com.lwm.smarthome.service;
 
 import com.lwm.smarthome.dao.AirConditionerDao;
 import com.lwm.smarthome.entity.AirConditioner;
+import com.lwm.smarthome.entity.Lighter;
 import com.lwm.smarthome.entity.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,13 +44,26 @@ public class AirConditionerService {
     }
 
     public void saveAirConditioner(AirConditioner airConditioner, SysUser sysUser) {
+        String a;
         airConditioner.setStatus(false);
         airConditioner.setAddTime(new Date());
         airConditioner.setCreateTime(new Date());
         airConditioner.setSysUser(sysUser);
         airConditionerDao.save(airConditioner);
     }
+    public void updateAirCondition(SysUser sysUser,String itemName,String status){
+        AirConditioner airConditioner=airConditionerDao.findBySysUserAndEquipmentName(sysUser,itemName);
+        if (status.equals("1")) {
+            airConditioner.setStatus(true);
+        } else {
+            airConditioner.setStatus(false);
+        }
+        airConditionerDao.save(airConditioner);
 
+    }
+    public AirConditioner getAirConditioner(SysUser sysUser, String deviceName) {
+        return airConditionerDao.findBySysUserAndEquipmentName(sysUser, deviceName);
+    }
     public Page<AirConditioner> findByEquipmentName(Pageable pageable, SysUser sysUser, String equipmentName) {
 
         return airConditionerDao.findBySysUserAndEquipmentName(pageable, sysUser,equipmentName);

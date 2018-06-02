@@ -72,12 +72,10 @@
                 </a>
             </div>
             <ul class="subnav">
-                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=4"
+                <li><a href="${ctx }/alertController/toShow"
                        target="rightFrame">报警器</a></li>
                 <li><a href="${ctx }/camera/watch"
                        target="rightFrame">安防摄像头</a></li>
-                <li><a href="${ctx }/sysEquipment/type?sysEquipment.type=5"
-                       target="rightFrame">AR</a></li>
             </ul>
         </li>
         </shiro:lacksRole >

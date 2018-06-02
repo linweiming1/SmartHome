@@ -25,7 +25,7 @@ public class Wifi2AppController {
         ioSessionMap = AppServiceSocket.getAcceptorSessions();
         IoSession ioSession = ioSessionMap.get("wangtianlong");
         if (ioSession != null) {
-            ioSession.write("abc");
+            ioSession.write("火灾预警");
             logger.info("已发送给客户端");
         } else {
             logger.info("客户端没上线");

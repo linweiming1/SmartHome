@@ -10,6 +10,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
 
     <context:annotation-config/>
+
     <!-- 配置自动扫描的包 -->
     <context:component-scan base-package="com.lwm.smarthome">
         <context:exclude-filter type="annotation"
@@ -26,7 +27,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <property name="password" value="${jdbc.password}"></property>
         <property name="driverClass" value="${jdbc.driverClass}"></property>
         <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
-
 
         <!-- 配置其他属性 -->
     </bean>
@@ -59,10 +59,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     </bean>
 
 
-    <!-- 配置事务 -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"></property>
-    </bean>
     <!--文件上传解析器配置 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- 上传文件的总大小和单个文件的大小 -->
@@ -72,6 +68,11 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"></property>
+    </bean>
     <!-- 配置支持基于注解的事务 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
@@ -80,7 +81,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <jpa:repositories base-package="com.lwm.smarthome"
                       entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
 
-
+    <!--配置Mail的bean-->
     <bean id="mailInfo" class="com.lwm.MailUtil.MailSenderInfo">
         <property name="mailServerHost" value="smtp.163.com"></property>
         <property name="mailServerPort" value="25"></property>

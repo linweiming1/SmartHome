@@ -1,19 +1,23 @@
 package com.lwm.Wifi;
 
 import com.lwm.app.AppServiceSocket;
+import com.lwm.smarthome.dao.AirConditionerDao;
 import com.lwm.smarthome.dao.FreezerDao;
 import com.lwm.smarthome.dao.LighterDao;
 import com.lwm.smarthome.dao.SysUserDao;
+import com.lwm.smarthome.entity.AirConditioner;
 import com.lwm.smarthome.entity.Freezer;
 import com.lwm.smarthome.entity.Lighter;
 import com.lwm.smarthome.entity.SysUser;
 import com.lwm.smarthome.service.LightService;
+import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.ServletContext;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -35,7 +39,10 @@ public class WifiServerSocket extends Thread {
     private static Logger logger = LoggerFactory.getLogger(WifiServerSocket.class);
     private ServletContext servletContext;
     private ServerSocket serverSocket;
-
+    ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    AirConditionerDao airConditionerDao = (AirConditionerDao) context.getBean("airConditionerDao");
+    SysUserDao sysUserDao = (SysUserDao) context.getBean("sysUserDao");
+    LighterDao lighterDao = (LighterDao) context.getBean("lighterDao");
     private static Map<String, ProcessSocketData> socketMap = new HashMap<>();
 
     private LightService lightService = new LightService();
@@ -113,28 +120,38 @@ public class WifiServerSocket extends Thread {
             try {
                 // 死循环，无线读取8266发送过来的数据
                 while (play) {
-                    byte[] msg = new byte[30];
+                    byte[] msg = new byte[28];
 
                     in.read(msg);//读取流数据
                     String str = new String(msg).trim();
-                    logger.info("The  wifi whose port is " + this.socket.getPort() + " has sent data: " + str);
+                    logger.warn("The  wifi whose port is " + this.socket.getPort() + " has sent data: " + str);
                     String[] strings = str.split(",");
                     //用于用户成功连接到服务器
                     if (strings.length == 1) {
                         mStrName = strings[0].trim();
 
-                        logger.info("the family name is " + mStrName + " has connected to server");
+                        logger.warn("the family name is " + mStrName + " has connected to server");
                         WifiServerSocket.socketMap.put(mStrName, this);
                     }
-                    //用于具体某个家庭设备的绑定
+                    //用于切换灯的状态
                     if (strings.length == 2) {
-                        String deviceType = strings[0];//设备类型
-                        String macAddress = strings[1];//mac地址
+
+                        String macAddress = strings[0];//mac地址
+                        String status = strings[1];//设备类型
+                        String [] statuses=status.split("-");
+                       String  statuses1=statuses[0];
                         if (mStrName == null) {
-                            logger.info("please send the family Id to server first");
+                            logger.warn("please send the family Id to server first");
                         } else {
-                            logger.info("begin to bind the " + mStrName + "'s device," +
-                                    "device type is " + deviceType + " macAddress is " + macAddress);
+                            SysUser sysUser = sysUserDao.findByUserName("linweiming");
+                            Lighter lighter = lighterDao.findBySysUserAndMacAddress(sysUser, macAddress);
+                            if (statuses1.equals("1")) {
+                                lighter.setStatus(true);
+                            } else {
+                                lighter.setStatus(false);
+                            }
+                            lighterDao.save(lighter);
+                            logger.warn("macAddress is" + macAddress + ",change status to" + status);
 
                         }
                     }
@@ -144,28 +161,58 @@ public class WifiServerSocket extends Thread {
                         String macAddress = strings[1];//设备的mac地址
                         String data = strings[2];//具体数据
                         String status = strings[3];//状态
+
                         if (mStrName != null) {
                             logger.info("begin to update the " + mStrName + "'s data," +
                                     "device type is " + deviceType + " macAddress is " + macAddress + ",data is " + data);
 
-                            ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-                            SysUserDao sysUserDao = (SysUserDao) context.getBean("sysUserDao");
                             SysUser sysUser = sysUserDao.findByUserName(mStrName);
+                            Lighter lighter = lighterDao.findBySysUserAndMacAddress(sysUser, macAddress);
                             if (deviceType.equals("light")) {
-                                LighterDao lighterDao = (LighterDao) context.getBean("lighterDao");
-                                Lighter lighter = lighterDao.findBySysUserAndMacAddress(sysUser, macAddress);
+                                int dataInt = Integer.parseInt(data);
+                                if (dataInt > 90) {
+                                    WifiServerSocket.ProcessSocketData psd = WifiServerSocket.getSocketMap()
+                                            .get(new String("linweiming"));
+                                    if (psd != null) {
+                                        // TODO 8266在线状态
+                                        if(lighter.isStatus()){
+                                            byte[] msg2 = {'L', 'E', 'D', '1'};
+                                            psd.send(msg2);
+                                            lighter.setStatus(false);
+                                            logger.info("the light is closed for the reason of high luminance");
+                                        }
+
+                                    } else {
+                                        // TODO 继电器离线状态
+                                        logger.info("the socket connection is null,for the wifi(8266) has not connect to the server!");
+                                    }
+
+                                }
+
                                 lighter.setAddTime(new Date());
                                 lighter.setLuminance(data);
                                 lighterDao.save(lighter);
-                                logger.info("亮度更新成功");
+                                logger.warn("亮度更新成功");
                             }
-                            if (deviceType == "freezer") {
-                                FreezerDao freezerDao = (FreezerDao) context.getBean("freezerDao");
-                                Freezer freezer = freezerDao.findBySysUserAndMacAddress(sysUser, macAddress);
-                                freezer.setAddTime(new Date());
-                                freezer.setCurrTemperature(data);
-                                freezerDao.save(freezer);
-                                logger.info("温度更新成功");
+                            if (deviceType.equals("airCd")) {
+                                int dataInt = Integer.parseInt(data);
+                                if (dataInt > 31) {
+                                    Map<String, IoSession> ioSessionMap;
+                                    ioSessionMap = AppServiceSocket.getAcceptorSessions();
+                                    IoSession ioSession = ioSessionMap.get("wangtianlong");
+                                    if (ioSession != null) {
+                                        ioSession.write("火灾预警");
+                                        logger.warn("已发送给客户端");
+                                    } else {
+                                        logger.warn("客户端没上线");
+                                    }
+                                }
+                                AirConditioner airConditioner = airConditionerDao.findBySysUserAndMacAddress(sysUser, macAddress);
+                                airConditioner.setAddTime(new Date());
+                                airConditioner.setCurrTemperature(data);
+                                airConditionerDao.save(airConditioner);
+                                logger.warn("空调温度更新成功");
+
                             }
 
                         } else {
@@ -201,7 +248,7 @@ public class WifiServerSocket extends Thread {
          * @param strName
          * @param msg
          */
-        private   void sendToAPP(String strName, byte[] msg) {
+        private void sendToAPP(String strName, byte[] msg) {
             System.out.println("sessionId:" + strName);
 
             if (AppServiceSocket.getAcceptorSessions().get(strName) != null) {

@@ -48,10 +48,6 @@ public class AndroidLoginController {
             returnMsg = "0";
             logger.info("安卓端用户登录失败！");
         }
-
-
-
-
         return returnMsg;
     }
 

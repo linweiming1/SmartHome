@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CurtainDao extends JpaRepository<Curtain,Long> {
     Curtain findById(long id);
-
+    Curtain findBySysUserAndEquipmentName(SysUser sysUser,String equipmentName);
     Page<Curtain> findBySysUser(Pageable pageable, SysUser sysUser);
 }

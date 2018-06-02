@@ -8,8 +8,6 @@ import java.util.Date;
 /*
 * 空调的实体类
 * */
-//怎么配置二级缓存的策略怎么指定？
-//@Cacheable()
 @Entity
 @Table(name = "air_conditioner")
 public class AirConditioner {

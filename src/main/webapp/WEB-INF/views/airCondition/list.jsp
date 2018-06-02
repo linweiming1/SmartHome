@@ -5,6 +5,7 @@
 <c:set var="ctx"
        value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}"/>
 <c:set var="r" value="${ctx }/resources"/>
+<%--<meta http-equiv="refresh" id="refresh" content=100;url="${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber()}">--%>
 <link rel="stylesheet" id='skin' type="text/css" href="${r }/prompt/skin/qq/ymPrompt.css"/>
 <link rel="stylesheet" href="${r }/common/css/sapar.css"/>
 <div id="saper-container">
@@ -20,7 +21,7 @@
                     <div class="kv-item-content">
                         <input type="text" id="equipmentName" name="equipmentName" placeholder="请输入设备名" maxlength="20">
                     </div>
-                   <label>&nbsp;</label>
+                    <label>&nbsp;</label>
                     <div class="kv-item-content">
                         <a class="sapar-btn sapar-btn-recom query-btn search">查询</a>
                     </div>
@@ -29,9 +30,9 @@
                         <a class="sapar-btn sapar-btn-recom query-btn add">绑定新空调</a>
                     </div>
                     <label>&nbsp;</label>
-                    <div class="kv-item-content">
-                        <a class="sapar-btn sapar-btn-recom query-btn refresh">刷新</a>
-                    </div>
+                  <%--  <div class="kv-item-content">
+                        <a class="sapar-btn sapar-btn-recom query-btn refresh">自动刷新</a>
+                    </div>--%>
                 </div>
             </div>
             <!--表格开始-->
@@ -94,10 +95,16 @@
         </div>
     </div>
 </div>
+<label class="am-switch am-switch-lg">
+    <input type="checkbox" id="check_is_f">
+    <span class="am-switch-checkbox"></span>
+</label>
+定时刷新
 <script type="text/javascript" src="${r }/common/js/jquery.js"></script>
 <script type="text/javascript" src="${r }/prompt/ymPrompt.js"></script>
 <script type="text/javascript" src="${r }/common/js/sapar.js"></script>
 <script type="text/javascript">
+
     $(function () {
         $('.search').click(function () {
             var equipmentName = $('#equipmentName').val();
@@ -160,11 +167,32 @@
         })
 
         $(".refresh").click(function () {
-            ymPrompt.alert({
-                message: '刷新成功', title: '成功信息', handler: function () {
-                    location.href = "${ctx }/airCondition/list?pageOffSet=${requestScope.page.getNumber() }";
+            /* window.onload = function(){
+                 setTimeout( location.href = "
+            ${ctx }/airCondition/list?pageOffSet=
+            ${requestScope.page.getNumber()}",2000);
+            }*/
+            //动态刷新页面—2016年7月27日16:24:26
+            if (flag == 1) {
+                time1 = 500000;
+                flag = 0;
+                alert("关闭自动刷新")
+
+            } else {
+                time1 = 2000;
+                flag = 1;
+                alert("开启自动刷新")
+
+            }
+
+
+            /* ymPrompt.alert({
+                   message: '刷新成功', title: '成功信息', handler: function () {
+                       location.href = "
+            ${ctx }/airCondition/list?pageOffSet=
+            ${requestScope.page.getNumber() }";
                 }
-            })
+            })*/
 
         })
         $('.add').click(function () {
@@ -217,5 +245,31 @@
                 }
             });
         }
+    }
+
+    /*setTimeout(function () {
+        location.reload()
+    }, time1); //指定1秒刷新一次*/
+    is_f = localStorage.getItem("is_f");
+    if(is_f == 2){
+        $('#check_is_f').attr("checked", true);
+        tf = setTimeout('myrefresh()',1000); //指定秒刷新一次
+    }
+
+
+
+
+    $('.am-switch input[type=checkbox]').on('click',function(){
+        if($(this).is(':checked')){
+            localStorage.setItem("is_f",2);
+            tf = setTimeout('myrefresh()',1000); //指定秒刷新一次
+        }else{
+            clearTimeout(tf); //取消自动刷新
+            localStorage.setItem("is_f",0);
+        }
+    })
+
+    function myrefresh(){
+        window.location.reload();
     }
 </script>

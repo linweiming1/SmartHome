@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LighterDao extends PagingAndSortingRepository<Lighter, Long> {
     Lighter findById(long id);
-
+    Lighter findBySysUserAndEquipmentName(SysUser sysUser,String equipmentName);
     Lighter findBySysUserAndMacAddress(SysUser sysUser, String macAddress);
 
     Page<Lighter> findBySysUser(Pageable pageable, SysUser sysUser);
